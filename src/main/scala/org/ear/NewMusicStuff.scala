@@ -1,5 +1,6 @@
 package org.ear
 
+
 import javax.sound.midi.MidiChannel
 
 
@@ -54,7 +55,7 @@ object NewMusicStuff extends App {
   }
 
   val offsetData: Map[Note, Int] = Map(C -> 0, CSharp -> 1, D -> 2, DSharp -> 3, E -> 4, F -> 5, FSharp -> 6, G -> 7, GSharp -> 8, A -> 9, BFlat -> 10, B -> 11 )
-  def offset(note: Note): Int = {
+  def noteOffset(note: Note): Int = {
     offsetData(note)
   }
 
@@ -93,6 +94,9 @@ object NewMusicStuff extends App {
     }
   }
 
+
+  def isCorrectRoot(tone: Int, expectedRoot: Note): Boolean = (tone - 60) % 12 == noteOffset(expectedRoot)
+
   def cMajorChords: Vector[(Note, ChordType)] =  Vector( (C, Major), (D, Minor), (E, Minor), (F, Major), (G, Major), (A, Minor)    )
 
 
@@ -120,17 +124,48 @@ object NewMusicStuff extends App {
   assert(makeTriad(60, FirstInversion, minor = true, lowerOnInversion = true) == Seq(51, 55, 60))
   assert(makeTriad(60, SecondInversion, minor = true, lowerOnInversion = true) == Seq(55, 60, 63))
 
+  assert(isCorrectRoot(62, D))
+  assert(isCorrectRoot(74, D))
+  assert(!isCorrectRoot(62, DSharp))
+
+  import java.awt.event.KeyListener
+  import java.awt.event.{KeyEvent, KeyListener}
 
   implicit val channel: MidiChannel = Player.makeChannels(0)
-  cMajorChords.
+  //MidiChannel channel = Player.makeChannelsAsJava().get(0);
+  val comparisonNote = 48;
+  var offset = 0;
+
+
+  val keyListener = new KeyListener {
+    def keyTyped(e: KeyEvent): Unit = {
+      println(s"key typed is $e")
+    }
+
+    def keyPressed(e: KeyEvent): Unit = {
+      offset = Keyboard.offset(e.getKeyChar)
+      Player.turnOn(comparisonNote + offset, channel)
+    }
+
+    def keyReleased(e: KeyEvent): Unit = {
+      Player.turnOff(comparisonNote + offset, channel)
+    }
+  }
+
+  val keyEventDemo = new KeyEventDemo(keyListener)
+  keyEventDemo.startIt()
+
+
+
+/*  cMajorChords.
     map { case (rootNote, chordType) => Description(rootNote, chordType, RootPostion) }.
     //filter(_.chordType == Major).
     foreach { chord =>
-      val tone = 60 + offset(chord.root)
+      val tone = 60 + noteOffset(chord.root)
       val triadInRootPosition = makeTriad(chord, tone, false)
       println(triadInRootPosition)
       Player.soundNotesForTime(triadInRootPosition, 2000)
-    }
+    }*/
 
 
 

@@ -37,7 +37,6 @@ package org.ear;
 * KeyEventDemo
 */
 
-import javax.sound.midi.MidiChannel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -52,8 +51,13 @@ public class KeyEventDemo extends JFrame
     JTextArea displayArea;
     JTextField typingArea;
     static final String newline = System.getProperty("line.separator");
+    private KeyListener keyListener;
 
-    public static void main(String[] args) {
+    public KeyEventDemo(KeyListener keyListener) {
+        this.keyListener = keyListener;
+    }
+
+    public void startIt() {
         /* Use an appropriate Look and Feel */
         try {
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -85,18 +89,17 @@ public class KeyEventDemo extends JFrame
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    private static void createAndShowGUI() {
-        //Create and set up the window.
-        KeyEventDemo frame = new KeyEventDemo("KeyEventDemo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private  void createAndShowGUI() {
+        //set up the window.
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Set up the content pane.
-        frame.addComponentsToPane();
+        this.addComponentsToPane();
 
 
         //Display the window.
-        frame.pack();
-        frame.setVisible(true);
+        this.pack();
+        this.setVisible(true);
     }
 
     private void addComponentsToPane() {
@@ -125,18 +128,11 @@ public class KeyEventDemo extends JFrame
         getContentPane().add(button, BorderLayout.PAGE_END);
     }
 
-    public KeyEventDemo(String name) {
-        super(name);
-    }
-
-    MidiChannel channel = Player.makeChannelsAsJava().get(0);
-    int comparisonNote = 48;
-    int offset = 0;
-
 
     /** Handle the key typed event from the text field. */
     public void keyTyped(KeyEvent e) {
         displayInfo(e, "KEY TYPED: ");
+        this.keyListener.keyTyped(e);
 
     }
 
@@ -144,14 +140,13 @@ public class KeyEventDemo extends JFrame
     //keyPressed seems to happen before key types
     public void keyPressed(KeyEvent e) {
         displayInfo(e, "KEY PRESSED: " + e.getKeyChar());
-        offset = Keyboard.offset(e.getKeyChar());
-        Player.turnOn(comparisonNote + offset, channel);
+        this.keyListener.keyPressed(e);
     }
 
     /** Handle the key released event from the text field. */
     public void keyReleased(KeyEvent e) {
         displayInfo(e, "KEY RELEASED: ");
-        Player.turnOff(comparisonNote + offset, channel);
+        this.keyListener.keyReleased(e);
     }
 
     /** Handle the button click. */
