@@ -1,7 +1,7 @@
 package org.ear
 
 
-import javax.sound.midi.MidiChannel
+
 
 
 object NewMusicStuff extends App {
@@ -109,6 +109,45 @@ object NewMusicStuff extends App {
 
   def descriptionsByRoot(descs: Seq[Description]): Map[Note, Seq[Description]] =descs.groupBy(_.root)
 
+  def chooseRandomly[A](as: IndexedSeq[A]): A = {
+    as(scala.util.Random.nextInt(as.size))
+  }
+
+  def chooseIt[A, K](as: Seq[A])(f: A => K): Seq[A] = {
+    if(as.size == 1) as
+    else {
+      val choicesMap: Map[K, Seq[A]] = as.groupBy(f)
+      choicesMap(chooseRandomly(choicesMap.keys.toIndexedSeq))
+    }
+  }
+
+  def chooseRootNote(descs: Seq[Description]): Seq[Description] = {
+    chooseIt(descs)(_.root)
+  }
+
+  def chooseChordType(descs: Seq[Description]): Seq[Description] = {
+    chooseIt(descs)(_.chordType)
+  }
+
+  def chooseVoicing(descs: Seq[Description]): Seq[Description] = {
+    chooseIt(descs)(_.voicing)
+  }
+
+  def choose(descs: Seq[Description]): (Description, Boolean) = {
+    val chordsWithVoicing: Seq[Description] = (chooseRootNote _).andThen(chooseChordType).andThen(chooseVoicing).apply(descs)
+    if(chordsWithVoicing.size != 1) throw new RuntimeException(s"got ${chordsWithVoicing.size} selections: ${chordsWithVoicing}")
+    else {
+      chordsWithVoicing.head match {
+        case theChoice: Description =>
+          theChoice.voicing match {
+            case RootPostion => (theChoice, false)
+            case someInversion => (theChoice, scala.util.Random.nextBoolean  )
+          }
+      }
+    }
+  }
+
+
   println(descriptionsByRoot(cMajorChordsWithAllVoicings))
 
 
@@ -128,6 +167,7 @@ object NewMusicStuff extends App {
   assert(isCorrectRoot(74, D))
   assert(!isCorrectRoot(62, DSharp))
 
+  import javax.sound.midi.MidiChannel
   import java.awt.event.KeyListener
   import java.awt.event.{KeyEvent, KeyListener}
 
@@ -139,7 +179,7 @@ object NewMusicStuff extends App {
 
   val keyListener = new KeyListener {
     def keyTyped(e: KeyEvent): Unit = {
-      println(s"key typed is $e")
+      //println(s"key typed is $e")
     }
 
     def keyPressed(e: KeyEvent): Unit = {
@@ -156,6 +196,17 @@ object NewMusicStuff extends App {
   keyEventDemo.startIt()
 
 
+  def chooseAndPlay(choices: Seq[Description]): Unit = {
+
+    val (desc, makeLowerOnInversion) = choose(choices)
+    val startingRoot = noteOffset(desc.root) + 60
+    val triad = makeTriad(desc, startingRoot, makeLowerOnInversion)
+    println(s"chord is $desc and notes played are $triad")
+    Player.soundNotesForTime(triad, 5000)
+    chooseAndPlay(choices)
+  }
+
+  chooseAndPlay(cMajorChordsWithAllVoicings)
 
 /*  cMajorChords.
     map { case (rootNote, chordType) => Description(rootNote, chordType, RootPostion) }.
