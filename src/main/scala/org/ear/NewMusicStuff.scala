@@ -1,6 +1,6 @@
 package org.ear
 
-
+import java.util.concurrent.atomic.{AtomicBoolean, AtomicReference}
 
 
 //Should I play interfering non-key chords in between the test chords to make the learning better?
@@ -31,7 +31,7 @@ object NewMusicStuff extends App {
   case object Major extends ChordType
   case object Minor extends ChordType
 
-
+  val comparisonTone = 60;
 
   case class Description(root: Note, chordType: ChordType, voicing: Voicing)
   //TODO Might get rid of these!
@@ -185,8 +185,10 @@ object NewMusicStuff extends App {
 
   implicit val channel: MidiChannel = Player.makeChannels(0)
   //MidiChannel channel = Player.makeChannelsAsJava().get(0);
-  val comparisonNote = 60;
-  var offset = 0;
+
+  var offsetForPlayerKeyboard = 0;
+  val currRoot = new AtomicReference[Option[Note]]
+  val doDelay = new AtomicBoolean(false)
 
 
   val keyListener = new KeyListener {
@@ -196,12 +198,20 @@ object NewMusicStuff extends App {
 
     def keyPressed(e: KeyEvent): Unit = {
       //println(s"key pressed is $e")
-      offset = Keyboard.offset(e.getKeyChar)
-      Player.turnOn(comparisonNote + offset, channel)
+      Keyboard.offset(e.getKeyChar).map { offset =>
+        Player.turnOn(comparisonTone + offset, channel)
+        currRoot.get.foreach { currentRoot =>
+          println("correct root? " + isCorrectRoot(comparisonTone + offset, currentRoot))
+        }
+      }.getOrElse {
+        println("not a valid note")
+        doDelay.set(true)
+      }
+
     }
 
     def keyReleased(e: KeyEvent): Unit = {
-      Player.turnOff(comparisonNote + offset, channel)
+      Player.turnOff(comparisonTone + offsetForPlayerKeyboard, channel)
     }
   }
 
@@ -210,18 +220,27 @@ object NewMusicStuff extends App {
 
 
   def chooseAndPlay(choices: Seq[Description], soundingTime: Long, history: Vector[Description] = Vector.empty): Unit = {
-    val (desc, makeLowerOnInversion) = choose(choices)
-    if(history.lastOption.isDefined && history.head == desc) {
-      println(s"skipping repeat. desc was $desc and last chord played was ${history.headOption}" )
-      chooseAndPlay(choices, soundingTime, history) //For now not allowing Description repeats, although repeats with different
-      //note instantiations might be interestingf
+    if(doDelay.get()){
+      doDelay.set(false)
+      println("delaying")
+      Thread.sleep(3000)
+      chooseAndPlay(choices, soundingTime, history)
     }else {
-      val startingRoot = noteOffset(desc.root) + 60
-      val triad = makeTriad(desc, startingRoot, makeLowerOnInversion)
-      println(s"chord is $desc and notes played are $triad")
-      //println(s"NOT SKIPPING!. desc was $desc and last chord played was ${history.headOption}" )
-      Player.soundNotesForTime(triad, soundingTime)
-      chooseAndPlay(choices, soundingTime, history :+ desc)
+      val (desc, makeLowerOnInversion) = choose(choices)
+      if (history.lastOption.isDefined && history.head == desc) {
+        println(s"skipping repeat. desc was $desc and last chord played was ${history.headOption}")
+        chooseAndPlay(choices, soundingTime, history) //For now not allowing Description repeats, although repeats with different
+        //note instantiations might be interestingf
+      } else {
+        println(s"thread is ${Thread.currentThread().getName}")
+        val startingRoot = noteOffset(desc.root) + comparisonTone
+        val triad = makeTriad(desc, startingRoot, makeLowerOnInversion)
+        println(s"chord is $desc and notes played are $triad")
+        currRoot.set(Some(desc.root))
+        //println(s"NOT SKIPPING!. desc was $desc and last chord played was ${history.headOption}" )
+        Player.soundNotesForTime(triad, soundingTime)
+        chooseAndPlay(choices, soundingTime, history :+ desc)
+      }
     }
   }
 
@@ -242,17 +261,17 @@ object NewMusicStuff extends App {
   //chooseAndPlay(majorChordsInCMajorKeyWithAllVoicings, 10000 )
   //chooseAndPlay(allMajorChords, 10000 )
 
-  chooseAndPlay(
+/*  chooseAndPlay(
     addAllVoicings(
       allMajorMinorChords.filter { case (note, chordType) => chordType == Major && whiteKeys.contains(note) }
     ), 5000
-  )
+  )*/
 
-/*  chooseAndPlay(
+  chooseAndPlay(
     addAllVoicings(
       allMajorMinorChords.filter { case (note, chordType) => chordType == Major }
-    ), 7000
-  )*/
+    ), 10000
+  )
 
 
 /*  cMajorChords.
