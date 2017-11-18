@@ -101,7 +101,7 @@ object NewMusicStuff extends App {
 
   def cMajorKeyChords: Vector[(Note, ChordType)] =  Vector( (C, Major), (D, Minor), (E, Minor), (F, Major), (G, Major), (A, Minor)    )
 
-  val allNotes: Vector[Note] = Vector(C, CSharp, D, DSharp, E, F, FSharp, G, GSharp, A, BFlat, C)
+  val allNotes: Vector[Note] = Vector(C, CSharp, D, DSharp, E, F, FSharp, G, GSharp, A, BFlat, B)
   val allMajorMinorChords: Vector[(Note, ChordType)] = for {
     note <- allNotes
     chord <- Vector(Major, Minor)
@@ -242,17 +242,17 @@ object NewMusicStuff extends App {
   //chooseAndPlay(majorChordsInCMajorKeyWithAllVoicings, 10000 )
   //chooseAndPlay(allMajorChords, 10000 )
 
-/*  chooseAndPlay(
+  chooseAndPlay(
     addAllVoicings(
       allMajorMinorChords.filter { case (note, chordType) => chordType == Major && whiteKeys.contains(note) }
     ), 5000
-  )*/
+  )
 
-  chooseAndPlay(
+/*  chooseAndPlay(
     addAllVoicings(
       allMajorMinorChords.filter { case (note, chordType) => chordType == Major }
-    ), 6000
-  )
+    ), 7000
+  )*/
 
 
 /*  cMajorChords.
