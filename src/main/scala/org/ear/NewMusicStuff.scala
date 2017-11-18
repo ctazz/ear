@@ -3,7 +3,9 @@ package org.ear
 
 
 
-
+//Should I play interfering non-key chords in between the test chords to make the learning better?
+//TODO I should probably have enums for notes, because I don't have any way to show root movement, and I'd like to print out
+//the root distinace from one test chord to another
 object NewMusicStuff extends App {
 
   sealed trait Voicing
@@ -93,18 +95,28 @@ object NewMusicStuff extends App {
       case n if n % 12 == 11 => "B"
     }
   }
-
+  val whiteKeys = Set[Note](C,D, E, F, G, A, B, C)
 
   def isCorrectRoot(tone: Int, expectedRoot: Note): Boolean = (tone - 60) % 12 == noteOffset(expectedRoot)
 
-  def cMajorChords: Vector[(Note, ChordType)] =  Vector( (C, Major), (D, Minor), (E, Minor), (F, Major), (G, Major), (A, Minor)    )
+  def cMajorKeyChords: Vector[(Note, ChordType)] =  Vector( (C, Major), (D, Minor), (E, Minor), (F, Major), (G, Major), (A, Minor)    )
+
+  val allNotes: Vector[Note] = Vector(C, CSharp, D, DSharp, E, F, FSharp, G, GSharp, A, BFlat, C)
+  val allMajorMinorChords: Vector[(Note, ChordType)] = for {
+    note <- allNotes
+    chord <- Vector(Major, Minor)
+  } yield (note, chord)
 
 
-  def cMajorChordsWithAllVoicings: Seq[Description] = {
+  def addAllVoicings(chords: Vector[(Note, ChordType)]): Seq[Description] = {
     for {
-      (root, chordType)  <- Vector( (C, Major), (D, Minor), (E, Minor), (F, Major), (G, Major), (A, Minor)    )
+      (root, chordType) <- chords
       voicing <- Vector(RootPostion, FirstInversion, SecondInversion)
     } yield Description(root, chordType, voicing)
+  }
+
+  def cMajorChordsWithAllVoicings: Seq[Description] = {
+    addAllVoicings(cMajorKeyChords)
   }
 
   def descriptionsByRoot(descs: Seq[Description]): Map[Note, Seq[Description]] =descs.groupBy(_.root)
@@ -135,7 +147,7 @@ object NewMusicStuff extends App {
 
   def choose(descs: Seq[Description]): (Description, Boolean) = {
     val chordsWithVoicing: Seq[Description] = (chooseRootNote _).andThen(chooseChordType).andThen(chooseVoicing).apply(descs)
-    if(chordsWithVoicing.size != 1) throw new RuntimeException(s"got ${chordsWithVoicing.size} selections: ${chordsWithVoicing}")
+    if(chordsWithVoicing.size != 1 && chordsWithVoicing.toSet.size != 1) throw new RuntimeException(s"got ${chordsWithVoicing.size} selections: ${chordsWithVoicing}")
     else {
       chordsWithVoicing.head match {
         case theChoice: Description =>
@@ -173,7 +185,7 @@ object NewMusicStuff extends App {
 
   implicit val channel: MidiChannel = Player.makeChannels(0)
   //MidiChannel channel = Player.makeChannelsAsJava().get(0);
-  val comparisonNote = 48;
+  val comparisonNote = 60;
   var offset = 0;
 
 
@@ -183,6 +195,7 @@ object NewMusicStuff extends App {
     }
 
     def keyPressed(e: KeyEvent): Unit = {
+      //println(s"key pressed is $e")
       offset = Keyboard.offset(e.getKeyChar)
       Player.turnOn(comparisonNote + offset, channel)
     }
@@ -196,17 +209,51 @@ object NewMusicStuff extends App {
   keyEventDemo.startIt()
 
 
-  def chooseAndPlay(choices: Seq[Description]): Unit = {
-
+  def chooseAndPlay(choices: Seq[Description], soundingTime: Long, history: Vector[Description] = Vector.empty): Unit = {
     val (desc, makeLowerOnInversion) = choose(choices)
-    val startingRoot = noteOffset(desc.root) + 60
-    val triad = makeTriad(desc, startingRoot, makeLowerOnInversion)
-    println(s"chord is $desc and notes played are $triad")
-    Player.soundNotesForTime(triad, 5000)
-    chooseAndPlay(choices)
+    if(history.lastOption.isDefined && history.head == desc) {
+      println(s"skipping repeat. desc was $desc and last chord played was ${history.headOption}" )
+      chooseAndPlay(choices, soundingTime, history) //For now not allowing Description repeats, although repeats with different
+      //note instantiations might be interestingf
+    }else {
+      val startingRoot = noteOffset(desc.root) + 60
+      val triad = makeTriad(desc, startingRoot, makeLowerOnInversion)
+      println(s"chord is $desc and notes played are $triad")
+      //println(s"NOT SKIPPING!. desc was $desc and last chord played was ${history.headOption}" )
+      Player.soundNotesForTime(triad, soundingTime)
+      chooseAndPlay(choices, soundingTime, history :+ desc)
+    }
   }
 
-  chooseAndPlay(cMajorChordsWithAllVoicings)
+  val primaryCMajorChordsInRootPosition = cMajorKeyChords.collect{case (root, chordType) if chordType == Major => Description(root, chordType, RootPostion) }
+
+  val majorChordsInCMajorKeyWithAllVoicings = addAllVoicings(cMajorKeyChords.filter(_._2 == Major ))
+  assert(majorChordsInCMajorKeyWithAllVoicings ==
+    Vector(Description(C,Major,RootPostion), Description(C,Major,FirstInversion), Description(C,Major,SecondInversion),
+      Description(F,Major,RootPostion), Description(F,Major,FirstInversion), Description(F,Major,SecondInversion),
+      Description(G,Major,RootPostion), Description(G,Major,FirstInversion), Description(G,Major,SecondInversion)
+    )
+  )
+
+  val allMajorChords = addAllVoicings(allMajorMinorChords.filter(_._2 == Major))
+
+
+  //val allWhiteKeyMajorChords = addAllVoicings(allMajorMinorChords.filter{ case(note, chordType) =>  chordType == Major && whiteKeys.contains(note)   })
+  //chooseAndPlay(majorChordsInCMajorKeyWithAllVoicings, 10000 )
+  //chooseAndPlay(allMajorChords, 10000 )
+
+/*  chooseAndPlay(
+    addAllVoicings(
+      allMajorMinorChords.filter { case (note, chordType) => chordType == Major && whiteKeys.contains(note) }
+    ), 5000
+  )*/
+
+  chooseAndPlay(
+    addAllVoicings(
+      allMajorMinorChords.filter { case (note, chordType) => chordType == Major }
+    ), 6000
+  )
+
 
 /*  cMajorChords.
     map { case (rootNote, chordType) => Description(rootNote, chordType, RootPostion) }.

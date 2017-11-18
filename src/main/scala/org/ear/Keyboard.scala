@@ -4,6 +4,8 @@ object Keyboard {
 
   def offset(char: Char): Int = {
     char match {
+      //case 20 => -5  Trying to do it for Caps lock won't work!
+      case '`' => -5  //Can't use caps lock, so using the ` key
       case 'q' => -4
       case 'a' => -3
       case 'w' => -2
@@ -24,6 +26,8 @@ object Keyboard {
       case '[' => 13
       case ''' => 14
       case ']' => 15
+      case 10 => 16 //that's the enter key on my laptop
+      case '\\' => 17
       case other => throw new RuntimeException(s"$other does not correspond to a valid musical note")
     }
   }
