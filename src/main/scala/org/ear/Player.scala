@@ -18,22 +18,53 @@ object SynthesizerPlayIt extends App {
 
 }
 
-
+//See https://stackoverflow.com/questions/4881541/java-midi-synthesizer-cant-change-instruments
 object Player {
 
+  //More stuff happens in here now than can be represented by our interface.
+  //Need to pass in the channel Int you want and the instrument Int, and we return that channel
+  //with that instrument loaded on it
+  //channelAndInstrument is the better function now
   def makeChannels: Array[MidiChannel] = {
-    val midiSynth = MidiSystem.getSynthesizer
-    midiSynth.open()
+    val synth = MidiSystem.getSynthesizer
+    synth.open()
 
     //get and load default instrument and channel lists
-    val instr = midiSynth.getDefaultSoundbank.getInstruments
-    val channels = midiSynth.getChannels
-    //Note: Shit still sounds the same no mater which channel I choose or which instrument I choose!
+    val instr = synth.getDefaultSoundbank.getInstruments
+    val channels = synth.getChannels
 
-    midiSynth.loadInstrument(instr(120)) //load an instrument. For now they all sound the same
+    //I wonder if this line is even needed!
+    //synth.loadInstrument(instr(99)) //load an instrument.
+
+    //mc[4].programChange(instr[120].getPatch().getProgram());
+    //120 has a very short sustain, which is good for test chords meshing with the user's answer
+    //Maybe I should give user and player different instruments
+    channels(0).programChange(instr(0).getPatch.getProgram)
 
     channels
 
+  }
+
+  def channelAndInstrument(synth: Synthesizer, channelNum: Int, instrumentNum: Int): MidiChannel = {
+    //get and load default instrument and channel lists
+    val instruments = synth.getDefaultSoundbank.getInstruments
+    val channels = synth.getChannels
+
+    //I wonder if this line is even needed!
+    synth.loadInstrument(instruments(instrumentNum)) //load an instrument.
+
+    //mc[4].programChange(instr[120].getPatch().getProgram());
+    //120 has a very short sustain, which is good for test chords meshing with the user's answer
+    //Maybe I should give user and player different instruments
+    channels(channelNum).programChange(instruments(instrumentNum).getPatch.getProgram)
+
+    channels(channelNum)
+  }
+
+  def createSynth: Synthesizer = {
+    val synth = MidiSystem.getSynthesizer
+    synth.open()
+    synth
   }
 
   //For now we'll play all notes on the same channel

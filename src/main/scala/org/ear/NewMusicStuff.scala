@@ -6,37 +6,10 @@ import java.util.concurrent.atomic.{AtomicBoolean, AtomicReference}
 //Should I play interfering non-key chords in between the test chords to make the learning better?
 //TODO I should probably have enums for notes, because I don't have any way to show root movement, and I'd like to print out
 //the root distinace from one test chord to another
+//TODO Play the chord over again after a time if the user doesn't respond
 object NewMusicStuff extends App {
 
-  sealed trait Voicing
-  case object RootPostion extends Voicing
-  case object FirstInversion extends Voicing
-  case object SecondInversion extends Voicing
-
-  sealed trait Note
-  case object C extends Note
-  case object CSharp extends Note
-  case object D extends Note
-  case object DSharp extends Note
-  case object E extends Note
-  case object F extends Note
-  case object FSharp extends Note
-  case object G extends Note
-  case object GSharp extends Note
-  case object A extends Note
-  case object BFlat extends Note //I like BFlat here for some reason. I know names really depend on what key you're in, but not worrying about that here
-  case object B extends Note
-
-  sealed trait ChordType
-  case object Major extends ChordType
-  case object Minor extends ChordType
-
-  val comparisonTone = 60;
-
-  case class Description(root: Note, chordType: ChordType, voicing: Voicing)
-  //TODO Might get rid of these!
-  case class PlayData(rootTone: Int, chordTones: Seq[Int])
-  case class Full(description: Description, playData: PlayData)
+  val comparisonTone = 60
 
   //We give the option of lowering the root because otherwise inversions only serve to raise the average pitch
   def makeTriad(theRoot: Int, voicing: Voicing, minor: Boolean = false, lowerOnInversion: Boolean = false): Seq[Int] = {
@@ -56,70 +29,10 @@ object NewMusicStuff extends App {
     makeTriad(rootTone, description.voicing, description.chordType != Major, lowerOnInversion)
   }
 
-  val offsetData: Map[Note, Int] = Map(C -> 0, CSharp -> 1, D -> 2, DSharp -> 3, E -> 4, F -> 5, FSharp -> 6, G -> 7, GSharp -> 8, A -> 9, BFlat -> 10, B -> 11 )
-  def noteOffset(note: Note): Int = {
-    offsetData(note)
-  }
-
-  def classifyTheNote(note: Int): Note = {
-    note match {
-      case n if n % 12 == 0 => C
-      case n if n % 12 == 1 => CSharp
-      case n if n % 12 == 2 => D
-      case n if n % 12 == 3 => DSharp
-      case n if n % 12 == 4 => E
-      case n if n % 12 == 5 => F
-      case n if n % 12 == 6 => FSharp
-      case n if n % 12 == 7 => G
-      case n if n % 12 == 8 => GSharp
-      case n if n % 12 == 9 => A
-      case n if n % 12 == 10 => BFlat
-      case n if n % 12 == 11 => B
-      case other => throw new RuntimeException(s"I thought there were only 12 possibilites in mod 12. But this number broke that rule: $other")
-    }
-  }
-
-  def nameTheNote(note: Int): String = {
-    note match {
-      case n if n % 12 == 0 => "C"
-      case n if n % 12 == 1 => "C#"
-      case n if n % 12 == 2 => "D"
-      case n if n % 12 == 3 => "D#"
-      case n if n % 12 == 4 => "E"
-      case n if n % 12 == 5 => "F"
-      case n if n % 12 == 6 => "F#"
-      case n if n % 12 == 7 => "G"
-      case n if n % 12 == 8 => "G#"
-      case n if n % 12 == 9 => "A"
-      case n if n % 12 == 10 => "BFlat"  //I like BFlat here for some reason. I know names really depend on what key you're in, but not worrying about that here
-      case n if n % 12 == 11 => "B"
-    }
-  }
-  val whiteKeys = Set[Note](C,D, E, F, G, A, B, C)
-
-  def isCorrectRoot(tone: Int, expectedRoot: Note): Boolean = (tone - 60) % 12 == noteOffset(expectedRoot)
-
-  def cMajorKeyChords: Vector[(Note, ChordType)] =  Vector( (C, Major), (D, Minor), (E, Minor), (F, Major), (G, Major), (A, Minor)    )
-
-  val allNotes: Vector[Note] = Vector(C, CSharp, D, DSharp, E, F, FSharp, G, GSharp, A, BFlat, B)
-  val allMajorMinorChords: Vector[(Note, ChordType)] = for {
-    note <- allNotes
-    chord <- Vector(Major, Minor)
-  } yield (note, chord)
+  import Music._
 
 
-  def addAllVoicings(chords: Vector[(Note, ChordType)]): Seq[Description] = {
-    for {
-      (root, chordType) <- chords
-      voicing <- Vector(RootPostion, FirstInversion, SecondInversion)
-    } yield Description(root, chordType, voicing)
-  }
-
-  def cMajorChordsWithAllVoicings: Seq[Description] = {
-    addAllVoicings(cMajorKeyChords)
-  }
-
-  def descriptionsByRoot(descs: Seq[Description]): Map[Note, Seq[Description]] =descs.groupBy(_.root)
+  def descriptionsByRoot(descs: Seq[Description]): Map[Note, Seq[Description]] = descs.groupBy(_.root)
 
   def chooseRandomly[A](as: IndexedSeq[A]): A = {
     as(scala.util.Random.nextInt(as.size))
@@ -183,12 +96,18 @@ object NewMusicStuff extends App {
   import java.awt.event.KeyListener
   import java.awt.event.{KeyEvent, KeyListener}
 
-  implicit val channel: MidiChannel = Player.makeChannels(0)
-  //MidiChannel channel = Player.makeChannelsAsJava().get(0);
+  val synth = Player.createSynth
+  val playerChannel = Player.channelAndInstrument(synth, 1, 120)
+  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 0)    // Player.makeChannels(0)
+
 
   var offsetForPlayerKeyboard = 0;
-  val currRoot = new AtomicReference[Option[Note]]
+  val currRoot: AtomicReference[Option[Note]] = new AtomicReference(None)
   val doDelay = new AtomicBoolean(false)
+  val playerChoseCorrectRoot = new AtomicBoolean(false)
+  val playerWantsToHearChordAgain = new AtomicBoolean(false)
+  //TODO: We don't respond to this one yet
+  val playerWantsToPreviousChordAgain = new AtomicBoolean(false)
 
 
   val keyListener = new KeyListener {
@@ -199,27 +118,59 @@ object NewMusicStuff extends App {
     def keyPressed(e: KeyEvent): Unit = {
       //println(s"key pressed is $e")
       Keyboard.offset(e.getKeyChar).map { offset =>
-        Player.turnOn(comparisonTone + offset, channel)
+        Player.turnOn(comparisonTone + offset, playerChannel)
         currRoot.get.foreach { currentRoot =>
-          println("correct root? " + isCorrectRoot(comparisonTone + offset, currentRoot))
+          val correctRoot = isCorrectRoot(comparisonTone + offset, currentRoot)
+          println(s"user's note was ${comparisonTone + offset} and root is $currentRoot")
+          println("correct root? " + correctRoot)
+          if(correctRoot) {
+            playerChoseCorrectRoot.set(true)
+            println("trying to turn off the user's note")
+            Player.turnOff(comparisonTone + offsetForPlayerKeyboard, playerChannel)
+          }
+
         }
       }.getOrElse {
         println("not a valid note")
-        doDelay.set(true)
+        //doDelay.set(true)
+        if(e.getKeyChar == 'A')
+          playerWantsToHearChordAgain.set(true)
+        else if(e.getKeyChar == 'P') {
+          playerWantsToPreviousChordAgain.set(true)
+        }
       }
 
     }
 
     def keyReleased(e: KeyEvent): Unit = {
-      Player.turnOff(comparisonTone + offsetForPlayerKeyboard, channel)
+      println("key released")
+      Player.turnOff(comparisonTone + offsetForPlayerKeyboard, playerChannel)
     }
   }
 
   val keyEventDemo = new KeyEventDemo(keyListener)
   keyEventDemo.startIt()
 
+  //TODO We could problaby use timer here, and call the chooseAndPlay function when we're done
+  def waitForCorrectRoot(triad: Seq[Int], soundingTime: Long): Unit = {
+    if(playerChoseCorrectRoot.get){
+      playerChoseCorrectRoot.set(false)
+      Thread.sleep(2000)
+      return
+    }
+    else if(playerWantsToHearChordAgain.get) {
+      playerWantsToHearChordAgain.set(false)
+      Player.soundNotesForTime(triad, soundingTime)(testerChannel)
+      waitForCorrectRoot(triad, soundingTime)
+    }
+    else {
+      Thread.sleep(200)
+      waitForCorrectRoot(triad, soundingTime)
+    }
+  }
 
-  def chooseAndPlay(choices: Seq[Description], soundingTime: Long, history: Vector[Description] = Vector.empty): Unit = {
+  def chooseAndPlay(choices: Seq[Description], soundingTime: Long, history: Vector[Description] = Vector.empty, delayTime: Long = 2000L): Unit = {
+    //TODO Probably don't need doDelay anymore
     if(doDelay.get()){
       doDelay.set(false)
       println("delaying")
@@ -238,7 +189,8 @@ object NewMusicStuff extends App {
         println(s"chord is $desc and notes played are $triad")
         currRoot.set(Some(desc.root))
         //println(s"NOT SKIPPING!. desc was $desc and last chord played was ${history.headOption}" )
-        Player.soundNotesForTime(triad, soundingTime)
+        Player.soundNotesForTime(triad, soundingTime)(testerChannel)
+        waitForCorrectRoot(triad, soundingTime)
         chooseAndPlay(choices, soundingTime, history :+ desc)
       }
     }
@@ -267,10 +219,20 @@ object NewMusicStuff extends App {
     ), 5000
   )*/
 
+/*
   chooseAndPlay(
     addAllVoicings(
+      //allMajorMinorChords
+      allMajorMinorChords.filter { case (note, chordType) => chordType == Minor }
+    ).filter(_.voicing == RootPostion), 5000 //This parameter makes a huge difference in my accuracy. Sounding the chord past the sound of my player's response makes for much better accuracy
+  )
+*/
+
+  chooseAndPlay(
+    addAllVoicings(
+      //allMajorMinorChords
       allMajorMinorChords.filter { case (note, chordType) => chordType == Major }
-    ), 10000
+    ), 5000 //This parameter makes a huge difference in my accuracy. Sounding the chord past the sound of my player's response makes for much better accuracy
   )
 
 
