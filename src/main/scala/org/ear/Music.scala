@@ -1,7 +1,7 @@
 package org.ear
 
 //TODO I should probably have enums for notes, because I don't have any way to show root movement, and I'd like to print out
-//the root distinace from one test chord to another
+//the root distance from one test chord to another
 
 sealed trait Voicing
 case object RootPostion extends Voicing
@@ -55,6 +55,7 @@ object Music {
       case n if n % 12 == 10 => BFlat
       case n if n % 12 == 11 => B
       case other => throw new RuntimeException(s"I thought there were only 12 possibilites in mod 12. But this number broke that rule: $other")
+        //Actually a negative number mod 12 is a negative number. So try to make the numbers you pass in here > 0!
     }
   }
 

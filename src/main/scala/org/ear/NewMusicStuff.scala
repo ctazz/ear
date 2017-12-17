@@ -34,17 +34,7 @@ object NewMusicStuff extends App {
 
   def descriptionsByRoot(descs: Seq[Description]): Map[Note, Seq[Description]] = descs.groupBy(_.root)
 
-  def chooseRandomly[A](as: IndexedSeq[A]): A = {
-    as(scala.util.Random.nextInt(as.size))
-  }
-
-  def chooseIt[A, K](as: Seq[A])(f: A => K): Seq[A] = {
-    if(as.size == 1) as
-    else {
-      val choicesMap: Map[K, Seq[A]] = as.groupBy(f)
-      choicesMap(chooseRandomly(choicesMap.keys.toIndexedSeq))
-    }
-  }
+  import Choosing._
 
   def chooseRootNote(descs: Seq[Description]): Seq[Description] = {
     chooseIt(descs)(_.root)
@@ -126,6 +116,7 @@ object NewMusicStuff extends App {
           if(correctRoot) {
             playerChoseCorrectRoot.set(true)
             println("trying to turn off the user's note")
+            //TODO!!!  We should probably set the offsetForPlayerKeyboard above, as soon as we get the offset arg in this map function, and base everything off of that.
             Player.turnOff(comparisonTone + offsetForPlayerKeyboard, playerChannel)
           }
 
