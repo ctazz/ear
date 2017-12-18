@@ -51,12 +51,15 @@ object IntervalTraining extends App {
 
   val legalIntervals: Vector[Int]= (-5 to 5).toVector.filterNot(_ == 0)
   val numTestIntervalsToPlay = 2
-  val timeToSoundTestNote = 2000
+  val timeToSoundTestNote = 1000
   val timeToWaitAfterCorrestResponse = 500
 
   //TODO Should these be atomic?
   var offsetForPlayerKeyboard = 0
   var lastOffsetForTestKeyboard = 0
+
+  var currentIntervalSequence = new AtomicReference(Vector.empty[Int])
+  var playerIntervalSequence = new AtomicReference(Vector.empty[Int])
 
   var currentSequence = new AtomicReference(Vector.empty[Int])
   var playersSequence = new AtomicReference(Vector.empty[Int])
@@ -64,14 +67,45 @@ object IntervalTraining extends App {
   def chooseAndSound(currentOffset: Int, numToTake: Int, timeToSound: Long): Unit = {
     val intervalsAndOffsets: Vector[(Int, Int)] = takeN(numToTake, currentOffset, legalIntervals)
 
+
     currentSequence.set(intervalsAndOffsets.map(_._2))
+    currentIntervalSequence.set(intervalsAndOffsets.map(_._1))
+
     lastOffsetForTestKeyboard = intervalsAndOffsets.last._2
 
     intervalsAndOffsets.foreach { case (interval, newOffset) =>
-      println(s"the diff is $interval and the new offset is $newOffset")
-      println(s"note is " + Music.classifyTheNote(comparisonTone + newOffset))
+      println(s"@@the diff is $interval and the new offset is $newOffset")
+      println(s"@@note is " + Music.classifyTheNote(comparisonTone + newOffset))
       Player.soundNotesForTime(Seq(comparisonTone + newOffset), timeToSound)(testerChannel)
     }
+  }
+
+  def isDigit(ch: Char): Boolean = {
+    val asciiNum = ch.toInt
+    asciiNum >= 48 && asciiNum <= 57
+  }
+
+  def clear: Unit = {
+    playersSequence.set(Vector.empty)
+    playerIntervalSequence.set(Vector.empty)
+    currentSequence.set(Vector.empty)
+    currentIntervalSequence.set(Vector.empty)
+  }
+
+  def playerHasCorrectIntervals(playerIntervalVector: Vector[Int], intervals: Vector[Int]): Boolean = {
+    if(playerIntervalVector.size < intervals.size)
+      false
+    else {
+      playerIntervalVector.slice(playerIntervalVector.size - intervals.size, playerIntervalVector.size).zip(intervals).find{ case(guess, actual) =>
+        guess != actual && guess != actual * (-1) //If interval is -3 and player said 3, we count that as correct
+      }.isEmpty
+    }
+
+  }
+
+  def playNextTest: Unit = {
+    Thread.sleep(timeToWaitAfterCorrestResponse)
+    chooseAndSound(lastOffsetForTestKeyboard, numTestIntervalsToPlay, timeToSoundTestNote)
   }
 
   val keyListener = new KeyListener {
@@ -80,26 +114,51 @@ object IntervalTraining extends App {
     }
 
     def keyPressed(e: KeyEvent): Unit = {
-      //println(s"key pressed is $e")
-      Keyboard.offset(e.getKeyChar).map { offset =>
-        offsetForPlayerKeyboard = offset
-        Player.turnOn(comparisonTone + offsetForPlayerKeyboard, playerChannel)
-        playersSequence.getAndUpdate{v =>
-          v :+ offsetForPlayerKeyboard
+
+      val ch = e.getKeyChar
+
+      if(isDigit(ch)) {
+        //TODO Need to play the user's tone here, based on the interval
+
+        val intervalGuess = ch.toInt - 48 match {
+          case x if x < 0 => x * -1
+          case x => x
         }
-        println(s"curentSequece is ${currentSequence.get} and playerSequence is ${playersSequence.get}")
-        if(playersSequence.get.containsSlice(currentSequence.get)) {
-          println(s"player is correct")
-          playersSequence.set(Vector.empty)
-          currentSequence.set(Vector.empty)
-          Thread.sleep(timeToWaitAfterCorrestResponse)
-          chooseAndSound(lastOffsetForTestKeyboard, numTestIntervalsToPlay, timeToSoundTestNote)
+        println(s"player's latest interval is $intervalGuess")
 
+        playerIntervalSequence.getAndUpdate { v =>
+          v :+ intervalGuess
+        }
+        if(playerHasCorrectIntervals(playerIntervalSequence.get, currentIntervalSequence.get)) {
+          println(s"player's interval(s) is/are correct")
+          clear
+          //Play last note of tester's previous sequence
+          Player.soundNotesForTime(Seq(comparisonTone + lastOffsetForTestKeyboard), 300 )(testerChannel)
+
+          playNextTest
         }
 
-      }.getOrElse {
-        println("not a valid note")
+      }
 
+      else {
+        Keyboard.offset(ch).map { offset =>
+          offsetForPlayerKeyboard = offset
+          Player.turnOn(comparisonTone + offsetForPlayerKeyboard, playerChannel)
+          playersSequence.getAndUpdate { v =>
+            v :+ offsetForPlayerKeyboard
+          }
+          println(s"curentSequece is ${currentSequence.get} and playerSequence is ${playersSequence.get}")
+          if (playersSequence.get.containsSlice(currentSequence.get)) {
+            println(s"player is correct")
+
+            clear
+            playNextTest
+          }
+
+        }.getOrElse {
+          println("not a valid note")
+
+        }
       }
 
     }
