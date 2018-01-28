@@ -54,9 +54,10 @@ object IntervalTraining extends App {
   val timeToSoundTestNote = 1000
   val timeToWaitAfterCorrestResponse = 500
 
-  //TODO Should these be atomic?
+  //TODO Should these be atomic? Pretty sure they should, at least the ones that are accessed both by sound generation and code that responds to player keystrokes
   var offsetForPlayerKeyboard = 0
-  var lastOffsetForTestKeyboard = 0
+  var previousOffsetForTestKeyboard = 0
+  var mostRecentOffsetForTestKeyboard = 0
 
   var currentIntervalSequence = new AtomicReference(Vector.empty[Int])
   var playerIntervalSequence = new AtomicReference(Vector.empty[Int])
@@ -67,11 +68,11 @@ object IntervalTraining extends App {
   def chooseAndSound(currentOffset: Int, numToTake: Int, timeToSound: Long): Unit = {
     val intervalsAndOffsets: Vector[(Int, Int)] = takeN(numToTake, currentOffset, legalIntervals)
 
-
+    previousOffsetForTestKeyboard = currentOffset
     currentSequence.set(intervalsAndOffsets.map(_._2))
     currentIntervalSequence.set(intervalsAndOffsets.map(_._1))
 
-    lastOffsetForTestKeyboard = intervalsAndOffsets.last._2
+    mostRecentOffsetForTestKeyboard = intervalsAndOffsets.last._2
 
     intervalsAndOffsets.foreach { case (interval, newOffset) =>
       println(s"@@the diff is $interval and the new offset is $newOffset")
@@ -103,9 +104,9 @@ object IntervalTraining extends App {
 
   }
 
-  def playNextTest: Unit = {
+  def createAndPlayNextTest: Unit = {
     Thread.sleep(timeToWaitAfterCorrestResponse)
-    chooseAndSound(lastOffsetForTestKeyboard, numTestIntervalsToPlay, timeToSoundTestNote)
+    chooseAndSound(mostRecentOffsetForTestKeyboard, numTestIntervalsToPlay, timeToSoundTestNote)
   }
 
   val keyListener = new KeyListener {
@@ -132,17 +133,33 @@ object IntervalTraining extends App {
         if(playerHasCorrectIntervals(playerIntervalSequence.get, currentIntervalSequence.get)) {
           println(s"player's interval(s) is/are correct")
           clear
-          //Play last note of tester's previous sequence
-          Player.soundNotesForTime(Seq(comparisonTone + lastOffsetForTestKeyboard), 300 )(testerChannel)
+          //Play last note of tester's previous sequence to set the player's starting note for the next set of intervals.
+          //We might decide not to do this.
+          Player.soundNotesForTime(Seq(comparisonTone + mostRecentOffsetForTestKeyboard), 300 )(testerChannel)
 
-          playNextTest
+          createAndPlayNextTest
         }
 
       }
 
+      else if (ch == 'A') { //A stands for "again", as in "play the sequence again"
+        val prevOffset = previousOffsetForTestKeyboard
+        val testNotes = currentSequence.get
+
+        val intervals = testNotes.foldLeft( (Vector.empty[Int], prevOffset)   ){  (x, curr: Int) =>  x match {
+          case (acc, prev) =>   (acc :+ (curr - prev),  curr)
+        }  }._1
+
+        println(s"test intervals are $intervals")
+
+        Player.soundNotesForTime(Seq(comparisonTone + prevOffset), timeToSoundTestNote)(testerChannel)
+        testNotes.foreach { case newOffset =>
+          Player.soundNotesForTime(Seq(comparisonTone + newOffset), timeToSoundTestNote)(testerChannel)
+        }
+      }
       else {
-        Keyboard.offset(ch).map { offset =>
-          offsetForPlayerKeyboard = offset
+        Keyboard.offset(ch).map { newOffsetForPlayer =>
+          offsetForPlayerKeyboard = newOffsetForPlayer
           Player.turnOn(comparisonTone + offsetForPlayerKeyboard, playerChannel)
           playersSequence.getAndUpdate { v =>
             v :+ offsetForPlayerKeyboard
@@ -152,7 +169,7 @@ object IntervalTraining extends App {
             println(s"player is correct")
 
             clear
-            playNextTest
+            createAndPlayNextTest
           }
 
         }.getOrElse {
@@ -172,9 +189,9 @@ object IntervalTraining extends App {
   val keyEventDemo = new KeyEventDemo(keyListener)
   keyEventDemo.startIt()
 
-
+  //Just doing one interval at a time might not be that useful
   val start = 0
-  Player.soundNotesForTime(Seq(comparisonTone + 0), 2000)(testerChannel)
-  chooseAndSound(0, numTestIntervalsToPlay, timeToSoundTestNote)
+  Player.soundNotesForTime(Seq(comparisonTone + start), 2000)(testerChannel)
+  chooseAndSound(start, numTestIntervalsToPlay, timeToSoundTestNote)
 
 }
