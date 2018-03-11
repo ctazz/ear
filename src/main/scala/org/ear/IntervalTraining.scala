@@ -6,7 +6,7 @@ import org.ear.NewMusicStuff.keyListener
 
 object IntervalTraining extends App {
 
-  val comparisonTone = 60
+  val comparisonTone = 48
 
   import javax.sound.midi.MidiChannel
   import java.awt.event.KeyListener
@@ -14,7 +14,7 @@ object IntervalTraining extends App {
 
   val synth = Player.createSynth
   val playerChannel = Player.channelAndInstrument(synth, 1, 120)
-  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 0)    // Player.makeChannels(0)
+  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 17)    // Player.makeChannels(0)
 
   //An offset is a difference from the 0 note
   //The intervals tell us the difference between each note and its preceding noe
@@ -23,9 +23,12 @@ object IntervalTraining extends App {
     val diff = Choosing.chooseRandomly(legalIntervals)
     val nextOffset = diff + currentOffset
 
-    if(nextOffset < lowestOffset || nextOffset > highestOffset)
+    if(nextOffset < lowestOffset || nextOffset > highestOffset) {
       chooseNextIntervalAndOffset(legalIntervals, currentOffset, lowestOffset, highestOffset)
-    else (diff, nextOffset)
+    }
+    else {
+      (diff, nextOffset)
+    }
   }
 
   val nextIntervalFunc: (Vector[Int], Int) => Tuple2[Int, Int] = (legalIntervals, currentOffset) =>
@@ -49,10 +52,13 @@ object IntervalTraining extends App {
 
   }
 
-  val legalIntervals: Vector[Int]= (-5 to 5).toVector.filterNot(_ == 0)
+  //val legalIntervals: Vector[Int]= (-5 to 5).toVector.filterNot(_ == 0)
+  val legalIntervals: Vector[Int]= (-7 to 7).toVector.filterNot(_ == 0)
+  //val legalIntervals: Vector[Int]= Vector(3,-3,4,-4)
+  //val legalIntervals: Vector[Int]= (-9 to 9).toVector.filterNot(x => math.abs(x) < 5)
   val numTestIntervalsToPlay = 2
-  val timeToSoundTestNote = 1000
-  val timeToWaitAfterCorrestResponse = 500
+  val timeToSoundTestNote = 600 //1000
+  val timeToWaitAfterCorrestResponse = 300 //500
 
   //TODO Should these be atomic? Pretty sure they should, at least the ones that are accessed both by sound generation and code that responds to player keystrokes
   var offsetForPlayerKeyboard = 0
@@ -66,6 +72,9 @@ object IntervalTraining extends App {
   var playersSequence = new AtomicReference(Vector.empty[Int])
 
   def chooseAndSound(currentOffset: Int, numToTake: Int, timeToSound: Long): Unit = {
+    //TODO Make this sound the current offfset too, and don't sound the current offset before this.
+    //That is, make this like what we do when replaying the sound in response to the user's "A" (again)
+    //And make sure this works well with both interval and actual-note testing
     val intervalsAndOffsets: Vector[(Int, Int)] = takeN(numToTake, currentOffset, legalIntervals)
 
     previousOffsetForTestKeyboard = currentOffset
@@ -138,6 +147,8 @@ object IntervalTraining extends App {
           Player.soundNotesForTime(Seq(comparisonTone + mostRecentOffsetForTestKeyboard), 300 )(testerChannel)
 
           createAndPlayNextTest
+        } else if(playerIntervalSequence.get.size == currentIntervalSequence.get.size) {
+          println(s"wrong guess. Actual sequence was ${currentIntervalSequence.get} and player's guess was  ${playerIntervalSequence.get}")
         }
 
       }
