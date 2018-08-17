@@ -6,7 +6,7 @@ import org.ear.NewMusicStuff.keyListener
 
 object IntervalTraining extends App {
 
-  val comparisonTone = 48
+  val comparisonTone = 51
 
   import javax.sound.midi.MidiChannel
   import java.awt.event.KeyListener
@@ -14,7 +14,7 @@ object IntervalTraining extends App {
 
   val synth = Player.createSynth
   val playerChannel = Player.channelAndInstrument(synth, 1, 120)
-  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 17)    // Player.makeChannels(0)
+  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 28) //17 and 28 are interesting too    // Player.makeChannels(0)
 
   //An offset is a difference from the 0 note
   //The intervals tell us the difference between each note and its preceding noe
@@ -54,10 +54,11 @@ object IntervalTraining extends App {
 
   //val legalIntervals: Vector[Int]= (-5 to 5).toVector.filterNot(_ == 0)
   val legalIntervals: Vector[Int]= (-7 to 7).toVector.filterNot(_ == 0)
-  //val legalIntervals: Vector[Int]= Vector(3,-3,4,-4)
+  //val legalIntervals: Vector[Int]= Vector(2, -2, 3,-3,4,-4)
+  //val legalIntervals: Vector[Int]= Vector(1, -1, 2, -2, 5, -5, 6, -6, 7, -7)
   //val legalIntervals: Vector[Int]= (-9 to 9).toVector.filterNot(x => math.abs(x) < 5)
-  val numTestIntervalsToPlay = 2
-  val timeToSoundTestNote = 600 //1000
+  val numTestIntervalsToPlay = 3
+  val timeToSoundTestNote =   600 //1000 //600 //1000 2000 //2000 4 at a time is good
   val timeToWaitAfterCorrestResponse = 300 //500
 
   //TODO Should these be atomic? Pretty sure they should, at least the ones that are accessed both by sound generation and code that responds to player keystrokes
@@ -202,7 +203,7 @@ object IntervalTraining extends App {
 
   //Just doing one interval at a time might not be that useful
   val start = 0
-  Player.soundNotesForTime(Seq(comparisonTone + start), 2000)(testerChannel)
+  Player.soundNotesForTime(Seq(comparisonTone + start), 600)(testerChannel)
   chooseAndSound(start, numTestIntervalsToPlay, timeToSoundTestNote)
 
 }
