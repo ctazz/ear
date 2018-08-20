@@ -87,6 +87,8 @@ object Music {
     chord <- Vector(Major, Minor)
   } yield (note, chord)
 
+  def rootVoicings(chords: Vector[(Note, ChordType)]): Seq[Description] = chords.map{ case (note, chord) => Description(note, chord, RootPostion)}
+
   def addAllVoicings(chords: Vector[(Note, ChordType)]): Seq[Description] = {
     for {
       (root, chordType) <- chords

@@ -142,14 +142,16 @@ object NewMusicStuff extends App {
   val keyEventDemo = new KeyEventDemo(keyListener)
   keyEventDemo.startIt()
 
-  //TODO We could problaby use timer here, and call the chooseAndPlay function when we're done
+  //TODO We could probably use timer here, and call the chooseAndPlay function when we're done
   def waitForCorrectRoot(triad: Seq[Int], soundingTime: Long): Unit = {
     if(playerChoseCorrectRoot.get){
+      println(s"player got correct root")
       playerChoseCorrectRoot.set(false)
-      Thread.sleep(2000)
+      Thread.sleep(1000)
       return
     }
     else if(playerWantsToHearChordAgain.get) {
+      println("player wants to hear chord again")
       playerWantsToHearChordAgain.set(false)
       Player.soundNotesForTime(triad, soundingTime)(testerChannel)
       waitForCorrectRoot(triad, soundingTime)
@@ -160,7 +162,13 @@ object NewMusicStuff extends App {
     }
   }
 
+  def makeTriadBasedOnComparisonNote(desc: Description, makeLowerOnInversion: Boolean): Seq[Int] = {
+    val startingRoot = noteOffset(desc.root) + comparisonTone
+     makeTriad(desc, startingRoot, makeLowerOnInversion)
+  }
+
   def chooseAndPlay(choices: Seq[Description], soundingTime: Long, history: Vector[Description] = Vector.empty, delayTime: Long = 2000L): Unit = {
+    println(s"entering chooseAndPlay. previous chord was ${history.lastOption}")
     //TODO Probably don't need doDelay anymore
     if(doDelay.get()){
       doDelay.set(false)
@@ -169,14 +177,13 @@ object NewMusicStuff extends App {
       chooseAndPlay(choices, soundingTime, history)
     }else {
       val (desc, makeLowerOnInversion) = choose(choices)
-      if (history.lastOption.isDefined && history.head == desc) {
+      if (history.lastOption == Some(desc)) {
         println(s"skipping repeat. desc was $desc and last chord played was ${history.headOption}")
         chooseAndPlay(choices, soundingTime, history) //For now not allowing Description repeats, although repeats with different
         //note instantiations might be interestingf
       } else {
-        println(s"thread is ${Thread.currentThread().getName}")
-        val startingRoot = noteOffset(desc.root) + comparisonTone
-        val triad = makeTriad(desc, startingRoot, makeLowerOnInversion)
+        println(s"thread is ${Thread.currentThread().getName}. New chord description is $desc and previous was ${history.lastOption}")
+        val triad =  makeTriadBasedOnComparisonNote(desc, makeLowerOnInversion)
         println(s"chord is $desc and notes played are $triad")
         currRoot.set(Some(desc.root))
         //println(s"NOT SKIPPING!. desc was $desc and last chord played was ${history.headOption}" )
@@ -219,12 +226,18 @@ object NewMusicStuff extends App {
   )
 */
 
+
+  Player.soundNotesForTime(makeTriadBasedOnComparisonNote(Description(C, Major, RootPostion), false), 4000)(testerChannel)
+  //Player.soundNotesForTime(triad, 5000)(testerChannel)
   chooseAndPlay(
-    addAllVoicings(
+    rootVoicings(
       //allMajorMinorChords
-      allMajorMinorChords.filter { case (note, chordType) => chordType == Major }
-    ), 5000 //This parameter makes a huge difference in my accuracy. Sounding the chord past the sound of my player's response makes for much better accuracy
+      cMajorKeyChords ++ Vector(BFlat -> Major, DSharp -> Major, D -> Major)
+    ), 2000 //This parameter makes a huge difference in my accuracy. Sounding the chord past the sound of my player's response makes for much better accuracy
   )
+
+
+
 
 
 /*  cMajorChords.
