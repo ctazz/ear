@@ -57,7 +57,7 @@ object IntervalTraining extends App {
   //val legalIntervals: Vector[Int]= Vector(2, -2, 3,-3,4,-4)
   //val legalIntervals: Vector[Int]= Vector(1, -1, 2, -2, 5, -5, 6, -6, 7, -7)
   //val legalIntervals: Vector[Int]= (-9 to 9).toVector.filterNot(x => math.abs(x) < 5)
-  val numTestIntervalsToPlay = 3
+  val numTestIntervalsToPlay = 2
   val timeToSoundTestNote =   600 //1000 //600 //1000 2000 //2000 4 at a time is good
   val timeToWaitAfterCorrestResponse = 300 //500
 

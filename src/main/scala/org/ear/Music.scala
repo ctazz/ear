@@ -33,6 +33,7 @@ case object Major extends ChordType
 case object Minor extends ChordType
 
 case class Description(root: Note, chordType: ChordType, voicing: Voicing)
+case class DescriptonAndActual(desc: Description, actual: Seq[Int])
 
 object Music {
   val offsetData: Map[Note, Int] = Map(C -> 0, CSharp -> 1, D -> 2, DSharp -> 3, E -> 4, F -> 5, FSharp -> 6, G -> 7, GSharp -> 8, A -> 9, BFlat -> 10, B -> 11 )
@@ -77,7 +78,9 @@ object Music {
   }
   val whiteKeys = Set[Note](C,D, E, F, G, A, B, C)
 
-  def isCorrectRoot(tone: Int, expectedRoot: Note): Boolean = tone % 12 == noteOffset(expectedRoot)
+  def isCorrectRoot(tone: Int, expectedRoot: Note): Boolean ={
+    tone % 12 == noteOffset(expectedRoot)
+  }
 
   def cMajorKeyChords: Vector[(Note, ChordType)] =  Vector( (C, Major), (D, Minor), (E, Minor), (F, Major), (G, Major), (A, Minor)    )
 
