@@ -78,8 +78,12 @@ object Music {
   }
   val whiteKeys = Set[Note](C,D, E, F, G, A, B, C)
 
-  def isCorrectRoot(tone: Int, expectedRoot: Note): Boolean ={
-    tone % 12 == noteOffset(expectedRoot)
+  def isCorrectRoot(tone: Int, expectedRoot: Note): Boolean = {
+    val adjustedTone = tone match {
+      case x if x >= 0 => x
+      case x => x + 12
+    }
+    adjustedTone % 12 == noteOffset(expectedRoot)
   }
 
   def cMajorKeyChords: Vector[(Note, ChordType)] =  Vector( (C, Major), (D, Minor), (E, Minor), (F, Major), (G, Major), (A, Minor)    )

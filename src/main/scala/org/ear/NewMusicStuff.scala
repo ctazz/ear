@@ -11,7 +11,8 @@ object NewMusicStuff extends App {
 
   //Change from 60 if you want to test CMajor shapes while doing other keys.  For instance, 62 will
   //make D Key sounds and the player can guess the roots using the CMajor shape keyboard
-  val comparisonTone = 60
+  val cComparisonTone = 60    //Don't Frickin' change this value!
+  val comparisonTone = 55
 
   //We give the option of lowering the root because otherwise inversions only serve to raise the average pitch
   def makeTriad(theRoot: Int, voicing: Voicing, minor: Boolean = false, lowerOnInversion: Boolean = false): Seq[Int] = {
@@ -33,6 +34,7 @@ object NewMusicStuff extends App {
   }
 
   val lowestNoteToPlay = 21
+  val lowestC = 24
   val highestNoteToPlay = 108
   //We assume the 0th note is the lowest note
   def expandAcrossKeyboard(smallSeries: Seq[Int]): Seq[Int] = {
@@ -78,7 +80,34 @@ object NewMusicStuff extends App {
 
   }
 
+
+
   import Music._
+  //TODO comparison tone machinations getting pretty ugly
+  def addLowRootTone(dAndA: DescriptonAndActual): Seq[Int] = {
+
+    val lowestRootToneThatWillFitOnTheKeyboard =
+      noteOffset(dAndA.desc.root) + lowestC + comparisonTone - cComparisonTone match {
+      case x if x < lowestC => x + 12
+      case x => x
+    }
+
+    //val lowestRootToneThatWillFitOnTheKeyboard = noteOffset(dAndA.desc.root) + lowestC
+    val tonesThatMightHaveHadRootAdded = dAndA.actual.headOption.map(lowestToneCurrentlyBeingPlayed => 
+      if(lowestToneCurrentlyBeingPlayed < lowestRootToneThatWillFitOnTheKeyboard){
+        println(s"TODO. Lowest note is below the lowest allowable root note. Maybe we should throw" +
+          s" an exception or, delete the lowest tone.  Not sure???")
+        dAndA.actual
+      } 
+      else lowestRootToneThatWillFitOnTheKeyboard +: dAndA.actual
+    ).getOrElse(
+      //TODO Let's have Vectors everywhere and not Seqs
+      Vector(lowestRootToneThatWillFitOnTheKeyboard)
+    )
+    
+    println(s"lowest note now being played for chord ${dAndA.desc} with tones ${dAndA.actual} is ${tonesThatMightHaveHadRootAdded.head}")
+    tonesThatMightHaveHadRootAdded
+  }
 
 
   def descriptionsByRoot(descs: Seq[Description]): Map[Note, Seq[Description]] = descs.groupBy(_.root)
@@ -137,6 +166,10 @@ object NewMusicStuff extends App {
     s"actual result is ${expandAcrossKeyboard(Seq(69, 72, 76))}"
   )
 
+  assert(isCorrectRoot(-3, A))
+  assert(isCorrectRoot(9, A))
+  assert(isCorrectRoot(67, G))
+  assert(isCorrectRoot(55, G))
   assert(isCorrectRoot(62, D))
   assert(isCorrectRoot(74, D))
   assert(!isCorrectRoot(62, DSharp))
@@ -170,8 +203,9 @@ object NewMusicStuff extends App {
           //I used to have this as isCorrectRoot(comparisonTone + offset, currentRoot)
           //But removing comparisionTone lets the user use the CMajor keyboard to guess chords in any key, and
           //we vary the key simply by changing the comparison tone.
+          //TODO This is a bit confusing, isn't it?
           val correctRoot = isCorrectRoot(offset, currentRoot)
-          println(s"user's note was ${comparisonTone + offset} and root is $currentRoot")
+          println(s"user's note was ${comparisonTone + offset} and currentRoot is $currentRoot")
           println("correct root? " + correctRoot)
           if(correctRoot) {
             playerChoseCorrectRoot.set(true)
@@ -237,6 +271,12 @@ object NewMusicStuff extends App {
           println(s"playing latest chord")
           Player.soundNotesForTime(history.last.actual, soundingTime)(testerChannel)
           waitForCorrectRoot(history, soundingTime)
+        case "b" => {
+          println("playing chord that may have had low root note added")
+          val sequenceOfNotesThatMightHaveHadLowRootAdded = addLowRootTone(history.last)
+          Player.soundNotesForTime(sequenceOfNotesThatMightHaveHadLowRootAdded, soundingTime)(testerChannel)
+          waitForCorrectRoot(history, soundingTime)
+        }
         case x if !x.isEmpty && x.forall(_.isDigit) =>
           playback(history, soundingTime, x.toInt)
           waitForCorrectRoot(history, soundingTime)
@@ -326,14 +366,21 @@ object NewMusicStuff extends App {
       //)
     )
   }
+
+/*  val chordsAndVoicingsToPlay =  rootVoicings(
+    //allMajorMinorChords
+    cMajorKeyChords ++ Vector(BFlat -> Major, DSharp -> Major, D -> Major)
+  )*/
+  val chordsAndVoicingsToPlay =  addAllVoicings(
+    //allMajorMinorChords
+    cMajorKeyChords
+  )//.filter(_.chordType == Major)
+
   Player.soundNotesForTime(starter.actual, 4000)(testerChannel)
   //Player.soundNotesForTime(triad, 5000)(testerChannel)
   chooseAndPlay(
-    rootVoicings(
-      //allMajorMinorChords
-      cMajorKeyChords //++ Vector(BFlat -> Major, DSharp -> Major, D -> Major)
-    ), 1000 //This parameter makes a huge difference in my accuracy. Sounding the chord past the sound of my player's response makes for much better accuracy,
-    ,history = Vector(starter),
+    chordsAndVoicingsToPlay, 1000 //This parameter makes a huge difference in my accuracy. Sounding the chord past the sound of my player's response makes for much better accuracy,
+    , history = Vector(starter),
   )
 
 
