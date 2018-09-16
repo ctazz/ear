@@ -12,7 +12,8 @@ object NewMusicStuff extends App {
   //Change from 60 if you want to test CMajor shapes while doing other keys.  For instance, 62 will
   //make D Key sounds and the player can guess the roots using the CMajor shape keyboard
   val cComparisonTone = 60    //Don't Frickin' change this value!
-  val comparisonTone = 55
+  //Change this value to play the probe chords in different keys
+  val comparisonTone = 60
 
   //We give the option of lowering the root because otherwise inversions only serve to raise the average pitch
   def makeTriad(theRoot: Int, voicing: Voicing, minor: Boolean = false, lowerOnInversion: Boolean = false): Seq[Int] = {
@@ -86,14 +87,15 @@ object NewMusicStuff extends App {
   //TODO comparison tone machinations getting pretty ugly
   def addLowRootTone(dAndA: DescriptonAndActual): Seq[Int] = {
 
-    val lowestRootToneThatWillFitOnTheKeyboard =
-      noteOffset(dAndA.desc.root) + lowestC + comparisonTone - cComparisonTone match {
+    //+12 so the lowest notes aren't so damn low
+    val lowestRootToneThatWillFitOnTheKeyboard: Int =
+      noteOffset(dAndA.desc.root) + lowestC + 12 + comparisonTone - cComparisonTone match {
       case x if x < lowestC => x + 12
       case x => x
     }
 
     //val lowestRootToneThatWillFitOnTheKeyboard = noteOffset(dAndA.desc.root) + lowestC
-    val tonesThatMightHaveHadRootAdded = dAndA.actual.headOption.map(lowestToneCurrentlyBeingPlayed => 
+    val tonesThatMightHaveHadRootAdded: Seq[Int] = dAndA.actual.headOption.map(lowestToneCurrentlyBeingPlayed =>
       if(lowestToneCurrentlyBeingPlayed < lowestRootToneThatWillFitOnTheKeyboard){
         println(s"TODO. Lowest note is below the lowest allowable root note. Maybe we should throw" +
           s" an exception or, delete the lowest tone.  Not sure???")
@@ -274,6 +276,7 @@ object NewMusicStuff extends App {
         case "b" => {
           println("playing chord that may have had low root note added")
           val sequenceOfNotesThatMightHaveHadLowRootAdded = addLowRootTone(history.last)
+          println("playing root of this chord: " + history.last.desc)
           Player.soundNotesForTime(sequenceOfNotesThatMightHaveHadLowRootAdded, soundingTime)(testerChannel)
           waitForCorrectRoot(history, soundingTime)
         }
@@ -318,7 +321,13 @@ object NewMusicStuff extends App {
         println(s"chord is $desc and notes played are $triad")
         currRoot.set(Some(desc.root))
         //println(s"NOT SKIPPING!. desc was $desc and last chord played was ${history.headOption}" )
+
+        //This ...
+        //val sequenceOfNotesThatMightHaveHadLowRootAdded = addLowRootTone(descriptonAndActual)
+        //Player.soundNotesForTime(sequenceOfNotesThatMightHaveHadLowRootAdded, soundingTime)(testerChannel)
+        //Or this ...
         Player.soundNotesForTime(triad, soundingTime)(testerChannel)
+
         waitForCorrectRoot(newHistory, soundingTime)
         chooseAndPlay(choices, soundingTime, newHistory)
       }
@@ -372,8 +381,8 @@ object NewMusicStuff extends App {
     cMajorKeyChords ++ Vector(BFlat -> Major, DSharp -> Major, D -> Major)
   )*/
   val chordsAndVoicingsToPlay =  addAllVoicings(
-    //allMajorMinorChords
-    cMajorKeyChords
+    allMajorMinorChords
+    //cMajorKeyChords
   )//.filter(_.chordType == Major)
 
   Player.soundNotesForTime(starter.actual, 4000)(testerChannel)
