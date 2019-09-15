@@ -2,12 +2,15 @@ package org.ear
 
 import java.util.concurrent.atomic.{AtomicBoolean, AtomicReference}
 
+//INSTRUCTIONS!!!
+//Just press "D" to go to the next chord
+//"A" to hear the chord again
 
 //Should I play interfering non-key chords in between the test chords to make the learning better?
 //TODO I should probably have enums for notes, because I don't have any way to show root movement, and I'd like to print out
 //the root distinace from one test chord to another
 //TODO Play the chord over again after a time if the user doesn't respond
-object NewMusicStuff extends App {
+object NewMusicStuff2 extends App {
 
   //Change from 60 if you want to test CMajor shapes while doing other keys.  For instance, 62 will
   //make D Key sounds and the player can guess the roots using the CMajor shape keyboard
@@ -90,9 +93,9 @@ object NewMusicStuff extends App {
     //+12 so the lowest notes aren't so damn low
     val lowestRootToneThatWillFitOnTheKeyboard: Int =
       noteOffset(dAndA.desc.root) + lowestC + 12 + comparisonTone - cComparisonTone match {
-      case x if x < lowestC => x + 12
-      case x => x
-    }
+        case x if x < lowestC => x + 12
+        case x => x
+      }
 
     //val lowestRootToneThatWillFitOnTheKeyboard = noteOffset(dAndA.desc.root) + lowestC
     val tonesThatMightHaveHadRootAdded: Seq[Int] = dAndA.actual.headOption.map(lowestToneCurrentlyBeingPlayed =>
@@ -100,13 +103,13 @@ object NewMusicStuff extends App {
         println(s"TODO. Lowest note is below the lowest allowable root note. Maybe we should throw" +
           s" an exception or, delete the lowest tone.  Not sure???")
         dAndA.actual
-      } 
+      }
       else lowestRootToneThatWillFitOnTheKeyboard +: dAndA.actual
     ).getOrElse(
       //TODO Let's have Vectors everywhere and not Seqs
       Vector(lowestRootToneThatWillFitOnTheKeyboard)
     )
-    
+
     println(s"lowest note now being played for chord ${dAndA.desc} with tones ${dAndA.actual} is ${tonesThatMightHaveHadRootAdded.head}")
     tonesThatMightHaveHadRootAdded
   }
@@ -159,12 +162,12 @@ object NewMusicStuff extends App {
   assert(makeTriad(60, SecondInversion, minor = true, lowerOnInversion = true) == Seq(55, 60, 63))
 
   assert(
-  expandAcrossKeyboard(Seq(60, 64, 67)) == Seq(24, 28, 31, 36, 40, 43, 48, 52, 55, 60, 64, 67, 72, 76, 79, 84, 88, 91, 96, 100, 103, 108),
+    expandAcrossKeyboard(Seq(60, 64, 67)) == Seq(24, 28, 31, 36, 40, 43, 48, 52, 55, 60, 64, 67, 72, 76, 79, 84, 88, 91, 96, 100, 103, 108),
     s"actual result is ${expandAcrossKeyboard(Seq(60, 64, 67))}"
   )
   assert(
-  expandAcrossKeyboard(Vector(69, 72, 76)) ==
-    Seq(21, 24, 28, 33, 36, 40, 45, 48, 52, 57, 60, 64, 69, 72, 76, 81, 84, 88, 93, 96, 100, 105, 108),
+    expandAcrossKeyboard(Vector(69, 72, 76)) ==
+      Seq(21, 24, 28, 33, 36, 40, 45, 48, 52, 57, 60, 64, 69, 72, 76, 81, 84, 88, 93, 96, 100, 105, 108),
     s"actual result is ${expandAcrossKeyboard(Seq(69, 72, 76))}"
   )
 
@@ -182,7 +185,7 @@ object NewMusicStuff extends App {
 
   val synth = Player.createSynth
   val playerChannel = Player.channelAndInstrument(synth, 1, 120)
-  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 41)    // Player.makeChannels(0)
+  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 30)//Player.channelAndInstrument(synth, 0, 41)    // Player.makeChannels(0)
 
 
   var offsetForPlayerKeyboard = 0;
@@ -262,8 +265,11 @@ object NewMusicStuff extends App {
         playerCommand.set("")
         command
       } match {
+        case "D" =>
+          println("going to next chord")
+          return
         case "A" =>
-          println("player wants to hear chord again")
+          println(s"player wants to hear chord again. ${history.last.desc}")
           Player.soundNotesForTime(history.last.actual, soundingTime)(testerChannel)
           waitForCorrectRoot(history, soundingTime)
 
@@ -294,7 +300,7 @@ object NewMusicStuff extends App {
 
   def makeTriadBasedOnComparisonNote(desc: Description, makeLowerOnInversion: Boolean): Seq[Int] = {
     val startingRoot = noteOffset(desc.root) + comparisonTone
-     makeTriad(desc, startingRoot, makeLowerOnInversion)
+    makeTriad(desc, startingRoot, makeLowerOnInversion)
   }
 
   def chooseAndPlay(choices: Seq[Description], soundingTime: Long, history: Vector[DescriptonAndActual] = Vector.empty, delayTime: Long = 2000L): Unit = {
@@ -318,7 +324,7 @@ object NewMusicStuff extends App {
         //)
         val descriptonAndActual = DescriptonAndActual(desc, triad)
         val newHistory = history :+ descriptonAndActual
-        println(s"chord is $desc and notes played are $triad")
+        println(s"notes played are $triad and chord is $desc")
         currRoot.set(Some(desc.root))
         //println(s"NOT SKIPPING!. desc was $desc and last chord played was ${history.headOption}" )
 
@@ -337,12 +343,12 @@ object NewMusicStuff extends App {
   val primaryCMajorChordsInRootPosition = cMajorKeyChords.collect{case (root, chordType) if chordType == Major => Description(root, chordType, RootPostion) }
 
   val majorChordsInCMajorKeyWithAllVoicings = addAllVoicings(cMajorKeyChords.filter(_._2 == Major ))
-  assert(majorChordsInCMajorKeyWithAllVoicings ==
+/*  assert(majorChordsInCMajorKeyWithAllVoicings ==
     Vector(Description(C,Major,RootPostion), Description(C,Major,FirstInversion), Description(C,Major,SecondInversion),
       Description(F,Major,RootPostion), Description(F,Major,FirstInversion), Description(F,Major,SecondInversion),
       Description(G,Major,RootPostion), Description(G,Major,FirstInversion), Description(G,Major,SecondInversion)
     )
-  )
+  )*/
 
   val allMajorChords = addAllVoicings(allMajorMinorChords.filter(_._2 == Major))
 
@@ -351,44 +357,46 @@ object NewMusicStuff extends App {
   //chooseAndPlay(majorChordsInCMajorKeyWithAllVoicings, 10000 )
   //chooseAndPlay(allMajorChords, 10000 )
 
-/*  chooseAndPlay(
-    addAllVoicings(
-      allMajorMinorChords.filter { case (note, chordType) => chordType == Major && whiteKeys.contains(note) }
-    ), 5000
-  )*/
+  /*  chooseAndPlay(
+      addAllVoicings(
+        allMajorMinorChords.filter { case (note, chordType) => chordType == Major && whiteKeys.contains(note) }
+      ), 5000
+    )*/
 
-/*
-  chooseAndPlay(
-    addAllVoicings(
-      //allMajorMinorChords
-      allMajorMinorChords.filter { case (note, chordType) => chordType == Minor }
-    ).filter(_.voicing == RootPostion), 5000 //This parameter makes a huge difference in my accuracy. Sounding the chord past the sound of my player's response makes for much better accuracy
-  )
-*/
+  /*
+    chooseAndPlay(
+      addAllVoicings(
+        //allMajorMinorChords
+        allMajorMinorChords.filter { case (note, chordType) => chordType == Minor }
+      ).filter(_.voicing == RootPostion), 5000 //This parameter makes a huge difference in my accuracy. Sounding the chord past the sound of my player's response makes for much better accuracy
+    )
+  */
 
 
 
   val starter: DescriptonAndActual = Description(C, Major, RootPostion) match {
     case desc => DescriptonAndActual(desc,
       //expandAcrossKeyboard(
-        makeTriadBasedOnComparisonNote(desc, false)
+      makeTriadBasedOnComparisonNote(desc, false)
       //)
     )
   }
 
-/*  val chordsAndVoicingsToPlay =  rootVoicings(
-    //allMajorMinorChords
-    cMajorKeyChords ++ Vector(BFlat -> Major, DSharp -> Major, D -> Major)
-  )*/
+  /*  val chordsAndVoicingsToPlay =  rootVoicings(
+      //allMajorMinorChords
+      cMajorKeyChords ++ Vector(BFlat -> Major, DSharp -> Major, D -> Major)
+    )*/
+  //TODO Temporarily not doing first inversion! And not doing assertion on majorChordsInCMajorKeyWithAllVoicings
   val chordsAndVoicingsToPlay =  addAllVoicings(
     //allMajorMinorChords
+    //popChordsInCMajor
     cMajorKeyChords
   )//.filter(_.chordType == Major)
 
   Player.soundNotesForTime(starter.actual, 4000)(testerChannel)
   //Player.soundNotesForTime(triad, 5000)(testerChannel)
   chooseAndPlay(
-    chordsAndVoicingsToPlay, 1000 //This parameter makes a huge difference in my accuracy. Sounding the chord past the sound of my player's response makes for much better accuracy,
+    chordsAndVoicingsToPlay, 6000 //This parameter makes a huge difference in my accuracy. Sounding the chord past the sound of my player's response makes for much better accuracy,
     , history = Vector(starter),
   )
 
@@ -396,16 +404,17 @@ object NewMusicStuff extends App {
 
 
 
-/*  cMajorChords.
-    map { case (rootNote, chordType) => Description(rootNote, chordType, RootPostion) }.
-    //filter(_.chordType == Major).
-    foreach { chord =>
-      val tone = 60 + noteOffset(chord.root)
-      val triadInRootPosition = makeTriad(chord, tone, false)
-      println(triadInRootPosition)
-      Player.soundNotesForTime(triadInRootPosition, 2000)
-    }*/
+  /*  cMajorChords.
+      map { case (rootNote, chordType) => Description(rootNote, chordType, RootPostion) }.
+      //filter(_.chordType == Major).
+      foreach { chord =>
+        val tone = 60 + noteOffset(chord.root)
+        val triadInRootPosition = makeTriad(chord, tone, false)
+        println(triadInRootPosition)
+        Player.soundNotesForTime(triadInRootPosition, 2000)
+      }*/
 
 
 
 }
+

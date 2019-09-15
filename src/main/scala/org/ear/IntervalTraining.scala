@@ -6,7 +6,9 @@ import org.ear.NewMusicStuff.keyListener
 
 object IntervalTraining extends App {
 
-  val comparisonTone = 51
+  val comparisonTone = 60 // 51
+  //These legal offsets restrict the game tones to diatonic in the major key.
+  val legalOffsets = Vector(-3,-1,0, 2, 4,5,7,9,11,12,14,16,17)
 
   import javax.sound.midi.MidiChannel
   import java.awt.event.KeyListener
@@ -14,6 +16,7 @@ object IntervalTraining extends App {
 
   val synth = Player.createSynth
   val playerChannel = Player.channelAndInstrument(synth, 1, 120)
+  //Make this 0 if you only want to play the keyboard, rather than answer the tones that the test creates
   val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 28) //17 and 28 are interesting too    // Player.makeChannels(0)
 
   //An offset is a difference from the 0 note
@@ -23,7 +26,8 @@ object IntervalTraining extends App {
     val diff = Choosing.chooseRandomly(legalIntervals)
     val nextOffset = diff + currentOffset
 
-    if(nextOffset < lowestOffset || nextOffset > highestOffset) {
+    //TODO THIS legalOffsets.containst stuff S A quick shortcut to restrict the set of notes (not intervals, notes) that we choose from
+    if(nextOffset < lowestOffset || nextOffset > highestOffset || !legalOffsets.contains(nextOffset)) {
       chooseNextIntervalAndOffset(legalIntervals, currentOffset, lowestOffset, highestOffset)
     }
     else {
@@ -53,12 +57,14 @@ object IntervalTraining extends App {
   }
 
   //val legalIntervals: Vector[Int]= (-5 to 5).toVector.filterNot(_ == 0)
-  val legalIntervals: Vector[Int]= (-7 to 7).toVector.filterNot(_ == 0)
+  val legalIntervals: Vector[Int]=  (-7 to 7).toVector.filterNot(_ == 0) //(-12 to 12).toVector.filterNot(_ == 0) //(-7 to 7).toVector.filterNot(_ == 0)
   //val legalIntervals: Vector[Int]= Vector(2, -2, 3,-3,4,-4)
   //val legalIntervals: Vector[Int]= Vector(1, -1, 2, -2, 5, -5, 6, -6, 7, -7)
   //val legalIntervals: Vector[Int]= (-9 to 9).toVector.filterNot(x => math.abs(x) < 5)
-  val numTestIntervalsToPlay = 2
-  val timeToSoundTestNote =   600 //1000 //600 //1000 2000 //2000 4 at a time is good
+  //Interesting. Play John Coltrane's Favorite Things on You Tube, reduce the YouTube volume to 1/3 of normal,
+  //and, for now, my error rates go from 98% or so to 25% or so at numTestIntersToPlay = 1
+  val numTestIntervalsToPlay = 2//5
+  val timeToSoundTestNote =  500//800 //400 //1000 //600 //1000 2000 //2000 4 at a time is good
   val timeToWaitAfterCorrestResponse = 300 //500
 
   //TODO Should these be atomic? Pretty sure they should, at least the ones that are accessed both by sound generation and code that responds to player keystrokes
@@ -145,7 +151,7 @@ object IntervalTraining extends App {
           clear
           //Play last note of tester's previous sequence to set the player's starting note for the next set of intervals.
           //We might decide not to do this.
-          Player.soundNotesForTime(Seq(comparisonTone + mostRecentOffsetForTestKeyboard), 300 )(testerChannel)
+          Player.soundNotesForTime(Seq(comparisonTone + mostRecentOffsetForTestKeyboard), timeToSoundTestNote )(testerChannel)
 
           createAndPlayNextTest
         } else if(playerIntervalSequence.get.size == currentIntervalSequence.get.size) {

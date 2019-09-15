@@ -1,0 +1,2354 @@
+@@the diff is -3 and the new offset is -3
+@@note is C
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is -1
+@@note is D
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is -4
+@@note is B
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is -5
+@@note is BFlat
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is -4
+@@note is B
+key released
+not a valid note
+test intervals are Vector(1)
+key released
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is -5
+@@note is BFlat
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is -1
+@@note is D
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is -1
+@@note is D
+key released
+not a valid note
+test intervals are Vector(-4)
+key released
+key released
+not a valid note
+test intervals are Vector(-4)
+key released
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is -4
+@@note is B
+key released
+not a valid note
+test intervals are Vector(-4)
+key released
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is -2
+@@note is CSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 2
+@@note is F
+key released
+not a valid note
+test intervals are Vector(4)
+key released
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is -4
+@@note is B
+key released
+not a valid note
+test intervals are Vector(-6)
+key released
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is -5
+@@note is BFlat
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is -2
+@@note is CSharp
+key released
+not a valid note
+test intervals are Vector(3)
+key released
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 2
+@@note is F
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 8
+@@note is B
+key released
+not a valid note
+test intervals are Vector(5)
+key released
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 2
+@@note is F
+key released
+not a valid note
+test intervals are Vector(-4)
+key released
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is -2
+@@note is CSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is -1
+@@note is D
+key released
+not a valid note
+test intervals are Vector(1)
+key released
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is -5
+@@note is BFlat
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is -1
+@@note is D
+key released
+not a valid note
+test intervals are Vector(4)
+key released
+key released
+not a valid note
+test intervals are Vector(4)
+key released
+key released
+not a valid note
+test intervals are Vector(4)
+key released
+key released
+not a valid note
+test intervals are Vector(4)
+key released
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 3
+@@note is FSharp
+key released
+not a valid note
+test intervals are Vector(4)
+key released
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 10
+@@note is CSharp
+key released
+not a valid note
+test intervals are Vector(2)
+key released
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is 2
+@@note is F
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 16
+@@note is G
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 5
+@@note is GSharp
+key released
+not a valid note
+test intervals are Vector(-4)
+key released
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is -1
+@@note is D
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 2
+@@note is F
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is -4
+@@note is B
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is -5
+@@note is BFlat
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 2
+@@note is F
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 4
+@@note is G
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 13
+@@note is E
+not a valid note
+test intervals are Vector(3)
+key released
+key released
+not a valid note
+test intervals are Vector(3)
+key released
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 10
+@@note is CSharp
+key released
+not a valid note
+test intervals are Vector(-5)
+key released
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 6
+wrong guess. Actual sequence was Vector(4) and player's guess was  Vector(6)
+key released
+not a valid note
+test intervals are Vector(4)
+key released
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 15
+@@note is FSharp
+key released
+not a valid note
+test intervals are Vector(3)
+key released
+key released
+not a valid note
+test intervals are Vector(3)
+key released
+key released
+not a valid note
+test intervals are Vector(3)
+key released
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 11
+@@note is D
+key released
+not a valid note
+test intervals are Vector(-4)
+key released
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 15
+@@note is FSharp
+key released
+not a valid note
+test intervals are Vector(4)
+key released
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 4
+@@note is G
+key released
+not a valid note
+test intervals are Vector(-7)
+key released
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 7
+wrong guess. Actual sequence was Vector(-5) and player's guess was  Vector(7)
+key released
+not a valid note
+test intervals are Vector(-5)
+key released
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 2
+@@note is F
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is -3
+@@note is C
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is -4
+@@note is B
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is -3
+@@note is C
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is -4
+@@note is B
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 0
+@@note is DSharp
+key released
+not a valid note
+test intervals are Vector(4)
+key released
+key released
+player's latest interval is 3
+wrong guess. Actual sequence was Vector(4) and player's guess was  Vector(3)
+key released
+not a valid note
+key released
+not a valid note
+test intervals are Vector(4)
+key released
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 4
+@@note is G
+key released
+not a valid note
+test intervals are Vector(4)
+key released
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is -2
+@@note is CSharp
+key released
+not a valid note
+test intervals are Vector(-5)
+key released
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 4
+@@note is G
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is -1
+@@note is D
+key released
+not a valid note
+test intervals are Vector(-5)
+key released
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 0
+@@note is DSharp
+key released
+not a valid note
+test intervals are Vector(-5)
+key released
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 3
+@@note is FSharp
+key released
+not a valid note
+test intervals are Vector(-7)
+key released
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 16
+@@note is G
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 4
+@@note is G
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is -3
+@@note is C
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is -5
+@@note is BFlat
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is -4
+@@note is B
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is -2
+@@note is CSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 1
+wrong guess. Actual sequence was Vector(2) and player's guess was  Vector(1)
+key released
+not a valid note
+test intervals are Vector(2)
+key released
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 2
+@@note is F
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 6
+@@note is A
+key released
+not a valid note
+test intervals are Vector(4)
+key released
+key released
+not a valid note
+test intervals are Vector(4)
+key released
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is -3
+@@note is C
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is -3
+@@note is C
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 2
+@@note is F
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is -4
+@@note is B
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is -5
+@@note is BFlat
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is -4
+@@note is B
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is -5
+@@note is BFlat
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is -3
+@@note is C
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 4
+@@note is G
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 4
+@@note is G
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 4
+@@note is G
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 12
+@@note is DSharp
+key released
+not a valid note
+test intervals are Vector(-1)
+key released
+key released
+not a valid note
+test intervals are Vector(-1)
+key released
+key released
+player's latest interval is 2
+wrong guess. Actual sequence was Vector(-1) and player's guess was  Vector(2)
+key released
+not a valid note
+test intervals are Vector(-1)
+key released
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 16
+@@note is G
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 2
+@@note is F
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 2
+@@note is F
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 4
+@@note is G
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 7
+@@note is BFlat
+key released
+not a valid note
+test intervals are Vector(3)
+key released
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is -3
+@@note is C
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is -3
+@@note is C
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is -1
+@@note is D
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 4
+@@note is G
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is -5
+@@note is BFlat
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 2
+@@note is F
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is -3
+@@note is C
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 4
+@@note is G
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is -1
+@@note is D
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is -2
+@@note is CSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is -5
+@@note is BFlat
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 2
+@@note is F
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 16
+@@note is G
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is -5
+@@note is BFlat
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is -4
+@@note is B
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is -3
+@@note is C
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is -1
+@@note is D
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 16
+@@note is G
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is 2
+@@note is F
+key released
+not a valid note
+test intervals are Vector(-6)
+key released
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is -5
+@@note is BFlat
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is -2
+@@note is CSharp
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is -3
+@@note is C
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is -5
+@@note is BFlat
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is -2
+@@note is CSharp
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 2
+@@note is F
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 7
+wrong guess. Actual sequence was Vector(-5) and player's guess was  Vector(7)
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 2
+wrong guess. Actual sequence was Vector(-1) and player's guess was  Vector(2)
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is -4
+@@note is B
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is -3
+@@note is C
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is -5
+@@note is BFlat
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is -4
+@@note is B
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is -3
+@@note is C
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is -1
+@@note is D
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 2
+@@note is F
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is -1
+@@note is D
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is -1
+@@note is D
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is -1
+@@note is D
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 2
+@@note is F
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 5
+@@note is GSharp
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 16
+@@note is G
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 16
+@@note is G
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 4
+@@note is G
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 7
+wrong guess. Actual sequence was Vector(-5) and player's guess was  Vector(7)
+key released
+not a valid note
+test intervals are Vector(-5)
+key released
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 13
+@@note is E
+key released
+not a valid note
+test intervals are Vector(5)
+key released
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 16
+@@note is G
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 6
+wrong guess. Actual sequence was Vector(-5) and player's guess was  Vector(6)
+key released
+not a valid note
+test intervals are Vector(-5)
+key released
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is -1
+@@note is D
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is -2
+@@note is CSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 0
+@@note is DSharp
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 6
+@@note is A
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 9
+@@note is C
+key released
+not a valid note
+test intervals are Vector(-5)
+key released
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 4
+@@note is G
+key released
+not a valid note
+test intervals are Vector(-5)
+key released
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 7 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 7
+@@note is BFlat
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 11
+@@note is D
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 12
+@@note is DSharp
+key released
+not a valid note
+test intervals are Vector(2)
+key released
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 16
+@@note is G
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -3 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 13
+@@note is E
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 3 and the new offset is 16
+@@note is G
+key released
+not a valid note
+test intervals are Vector(3)
+key released
+key released
+player's latest interval is 3
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 12
+@@note is DSharp
+key released
+not a valid note
+test intervals are Vector(4)
+key released
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 16
+@@note is G
+key released
+not a valid note
+test intervals are Vector(4)
+key released
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -1 and the new offset is 15
+@@note is FSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is -5 and the new offset is 10
+@@note is CSharp
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 2 and the new offset is 12
+@@note is DSharp
+key released
+player's latest interval is 2
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 16
+@@note is G
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 9
+@@note is C
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -6 and the new offset is -3
+@@note is C
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 1 and the new offset is -2
+@@note is CSharp
+key released
+player's latest interval is 1
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 4
+@@note is G
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 4 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is -7 and the new offset is 1
+@@note is E
+key released
+player's latest interval is 7
+player's interval(s) is/are correct
+@@the diff is -4 and the new offset is -3
+@@note is C
+key released
+player's latest interval is 4
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 3
+@@note is FSharp
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is 5 and the new offset is 8
+@@note is B
+key released
+player's latest interval is 5
+player's interval(s) is/are correct
+@@the diff is 6 and the new offset is 14
+@@note is F
+key released
+player's latest interval is 6
+player's interval(s) is/are correct
+@@the diff is -2 and the new offset is 12
+@@note is DSharp
+key released
+

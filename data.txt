@@ -1,0 +1,143 @@
+/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/bin/java "-javaagent:/Applications/IntelliJ IDEA CE.app/Contents/lib/idea_rt.jar=52274:/Applications/IntelliJ IDEA CE.app/Contents/bin" -Dfile.encoding=UTF-8 -classpath /Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/deploy.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/ext/cldrdata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/ext/dnsns.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/ext/jaccess.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/ext/jfxrt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/ext/localedata.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/ext/nashorn.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/ext/sunec.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/ext/sunjce_provider.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/ext/sunpkcs11.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/ext/zipfs.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/javaws.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jfxswt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/management-agent.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/plugin.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/lib/ant-javafx.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/lib/dt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/lib/javafx-mx.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/lib/jconsole.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/lib/packager.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/lib/sa-jdi.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/lib/tools.jar:/Users/charlestassoni/scala/learning/ear/target/scala-2.12/classes:/Users/charlestassoni/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.12.3.jar org.ear.NewMusicStuff
+objc[2360]: Class JavaLaunchHelper is implemented in both /Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/bin/java (0x10048a4c0) and /Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/jre/lib/libinstrument.dylib (0x1005164e0). One of the two will be used. Which one is undefined.
+Map(E -> Vector(Description(E,Minor,RootPostion), Description(E,Minor,FirstInversion), Description(E,Minor,SecondInversion)), F -> Vector(Description(F,Major,RootPostion), Description(F,Major,FirstInversion), Description(F,Major,SecondInversion)), A -> Vector(Description(A,Minor,RootPostion), Description(A,Minor,FirstInversion), Description(A,Minor,SecondInversion)), G -> Vector(Description(G,Major,RootPostion), Description(G,Major,FirstInversion), Description(G,Major,SecondInversion)), C -> Vector(Description(C,Major,RootPostion), Description(C,Major,FirstInversion), Description(C,Major,SecondInversion)), D -> Vector(Description(D,Minor,RootPostion), Description(D,Minor,FirstInversion), Description(D,Minor,SecondInversion)))
+entering chooseAndPlay. previous chord was None
+thread is main. New chord description is Description(F,Major,RootPostion) and previous was None
+chord is Description(F,Major,RootPostion) and notes played are Vector(65, 69, 72)
+user's note was 65 and root is F
+correct root? true
+trying to turn off the user's note
+player got correct root
+key released
+entering chooseAndPlay. previous chord was Some(Description(F,Major,RootPostion))
+thread is main. New chord description is Description(E,Minor,RootPostion) and previous was Some(Description(F,Major,RootPostion))
+chord is Description(E,Minor,RootPostion) and notes played are Vector(64, 67, 71)
+user's note was 64 and root is E
+correct root? true
+trying to turn off the user's note
+player got correct root
+key released
+entering chooseAndPlay. previous chord was Some(Description(E,Minor,RootPostion))
+thread is main. New chord description is Description(C,Major,RootPostion) and previous was Some(Description(E,Minor,RootPostion))
+chord is Description(C,Major,RootPostion) and notes played are Vector(60, 64, 67)
+user's note was 60 and root is C
+correct root? true
+trying to turn off the user's note
+player got correct root
+key released
+entering chooseAndPlay. previous chord was Some(Description(C,Major,RootPostion))
+thread is main. New chord description is Description(G,Major,RootPostion) and previous was Some(Description(C,Major,RootPostion))
+chord is Description(G,Major,RootPostion) and notes played are Vector(67, 71, 74)
+user's note was 67 and root is G
+correct root? true
+trying to turn off the user's note
+key released
+player got correct root
+entering chooseAndPlay. previous chord was Some(Description(G,Major,RootPostion))
+thread is main. New chord description is Description(F,Major,RootPostion) and previous was Some(Description(G,Major,RootPostion))
+chord is Description(F,Major,RootPostion) and notes played are Vector(65, 69, 72)
+user's note was 65 and root is F
+correct root? true
+trying to turn off the user's note
+key released
+player got correct root
+entering chooseAndPlay. previous chord was Some(Description(F,Major,RootPostion))
+thread is main. New chord description is Description(C,Major,RootPostion) and previous was Some(Description(F,Major,RootPostion))
+chord is Description(C,Major,RootPostion) and notes played are Vector(60, 64, 67)
+user's note was 60 and root is C
+correct root? true
+trying to turn off the user's note
+key released
+player got correct root
+entering chooseAndPlay. previous chord was Some(Description(C,Major,RootPostion))
+thread is main. New chord description is Description(E,Minor,RootPostion) and previous was Some(Description(C,Major,RootPostion))
+chord is Description(E,Minor,RootPostion) and notes played are Vector(64, 67, 71)
+user's note was 64 and root is E
+correct root? true
+trying to turn off the user's note
+key released
+player got correct root
+entering chooseAndPlay. previous chord was Some(Description(E,Minor,RootPostion))
+thread is main. New chord description is Description(G,Major,RootPostion) and previous was Some(Description(E,Minor,RootPostion))
+chord is Description(G,Major,RootPostion) and notes played are Vector(67, 71, 74)
+user's note was 67 and root is G
+correct root? true
+trying to turn off the user's note
+player got correct root
+key released
+entering chooseAndPlay. previous chord was Some(Description(G,Major,RootPostion))
+thread is main. New chord description is Description(D,Minor,RootPostion) and previous was Some(Description(G,Major,RootPostion))
+chord is Description(D,Minor,RootPostion) and notes played are Vector(62, 65, 69)
+user's note was 62 and root is D
+correct root? true
+trying to turn off the user's note
+key released
+player got correct root
+entering chooseAndPlay. previous chord was Some(Description(D,Minor,RootPostion))
+thread is main. New chord description is Description(F,Major,RootPostion) and previous was Some(Description(D,Minor,RootPostion))
+chord is Description(F,Major,RootPostion) and notes played are Vector(65, 69, 72)
+user's note was 65 and root is F
+correct root? true
+trying to turn off the user's note
+player got correct root
+key released
+entering chooseAndPlay. previous chord was Some(Description(F,Major,RootPostion))
+thread is main. New chord description is Description(G,Major,RootPostion) and previous was Some(Description(F,Major,RootPostion))
+chord is Description(G,Major,RootPostion) and notes played are Vector(67, 71, 74)
+user's note was 67 and root is G
+correct root? true
+trying to turn off the user's note
+player got correct root
+key released
+entering chooseAndPlay. previous chord was Some(Description(G,Major,RootPostion))
+thread is main. New chord description is Description(F,Major,RootPostion) and previous was Some(Description(G,Major,RootPostion))
+chord is Description(F,Major,RootPostion) and notes played are Vector(65, 69, 72)
+user's note was 65 and root is F
+correct root? true
+trying to turn off the user's note
+key released
+player got correct root
+entering chooseAndPlay. previous chord was Some(Description(F,Major,RootPostion))
+thread is main. New chord description is Description(G,Major,RootPostion) and previous was Some(Description(F,Major,RootPostion))
+chord is Description(G,Major,RootPostion) and notes played are Vector(67, 71, 74)
+user's note was 67 and root is G
+correct root? true
+trying to turn off the user's note
+key released
+player got correct root
+entering chooseAndPlay. previous chord was Some(Description(G,Major,RootPostion))
+thread is main. New chord description is Description(C,Major,RootPostion) and previous was Some(Description(G,Major,RootPostion))
+chord is Description(C,Major,RootPostion) and notes played are Vector(60, 64, 67)
+user's note was 60 and root is C
+correct root? true
+trying to turn off the user's note
+key released
+player got correct root
+entering chooseAndPlay. previous chord was Some(Description(C,Major,RootPostion))
+thread is main. New chord description is Description(D,Minor,RootPostion) and previous was Some(Description(C,Major,RootPostion))
+chord is Description(D,Minor,RootPostion) and notes played are Vector(62, 65, 69)
+user's note was 62 and root is D
+correct root? true
+trying to turn off the user's note
+key released
+player got correct root
+entering chooseAndPlay. previous chord was Some(Description(D,Minor,RootPostion))
+thread is main. New chord description is Description(E,Minor,RootPostion) and previous was Some(Description(D,Minor,RootPostion))
+chord is Description(E,Minor,RootPostion) and notes played are Vector(64, 67, 71)
+user's note was 64 and root is E
+correct root? true
+trying to turn off the user's note
+key released
+player got correct root
+entering chooseAndPlay. previous chord was Some(Description(E,Minor,RootPostion))
+thread is main. New chord description is Description(C,Major,RootPostion) and previous was Some(Description(E,Minor,RootPostion))
+chord is Description(C,Major,RootPostion) and notes played are Vector(60, 64, 67)
+user's note was 60 and root is C
+correct root? true
+trying to turn off the user's note
+key released
+player got correct root
+entering chooseAndPlay. previous chord was Some(Description(C,Major,RootPostion))
+thread is main. New chord description is Description(E,Minor,RootPostion) and previous was Some(Description(C,Major,RootPostion))
+chord is Description(E,Minor,RootPostion) and notes played are Vector(64, 67, 71)
+

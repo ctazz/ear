@@ -88,6 +88,8 @@ object Music {
 
   def cMajorKeyChords: Vector[(Note, ChordType)] =  Vector( (C, Major), (D, Minor), (E, Minor), (F, Major), (G, Major), (A, Minor)    )
 
+  def popChordsInCMajor: Vector[(Note, ChordType)] = cMajorKeyChords ++ Vector(  (BFlat, Major), (F, Minor), (D, Major), (E, Major), (C, Minor) )
+
   val allNotes: Vector[Note] = Vector(C, CSharp, D, DSharp, E, F, FSharp, G, GSharp, A, BFlat, B)
   val allMajorMinorChords: Vector[(Note, ChordType)] = for {
     note <- allNotes
@@ -99,7 +101,8 @@ object Music {
   def addAllVoicings(chords: Vector[(Note, ChordType)]): Seq[Description] = {
     for {
       (root, chordType) <- chords
-      voicing <- Vector(RootPostion, FirstInversion, SecondInversion)
+      //voicing <- Vector(RootPostion,  SecondInversion)
+       voicing <- Vector(RootPostion, FirstInversion, SecondInversion)
     } yield Description(root, chordType, voicing)
   }
 
