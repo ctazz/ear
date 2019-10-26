@@ -185,7 +185,11 @@ object NewMusicStuff2 extends App {
 
   val synth = Player.createSynth
   val playerChannel = Player.channelAndInstrument(synth, 1, 120)
-  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 30)//Player.channelAndInstrument(synth, 0, 41)    // Player.makeChannels(0)
+  //See https://en.wikipedia.org/wiki/General_MIDI Program Change Events for the sounds
+  // corresponding to the instrurment number
+  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 30)
+  //Player.channelAndInstrument(synth, 0, 69)
+    //Player.channelAndInstrument(synth, 0, 30)//Player.channelAndInstrument(synth, 0, 41)    // Player.makeChannels(0)
 
 
   var offsetForPlayerKeyboard = 0;
