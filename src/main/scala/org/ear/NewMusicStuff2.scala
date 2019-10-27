@@ -1,6 +1,7 @@
 package org.ear
 
 import java.util.concurrent.atomic.{AtomicBoolean, AtomicReference}
+import javax.swing.text.DefaultStyledDocument.ElementSpec
 
 //INSTRUCTIONS!!!
 //Just press "D" to go to the next chord
@@ -9,7 +10,7 @@ import java.util.concurrent.atomic.{AtomicBoolean, AtomicReference}
 //Should I play interfering non-key chords in between the test chords to make the learning better?
 //TODO I should probably have enums for notes, because I don't have any way to show root movement, and I'd like to print out
 //the root distinace from one test chord to another
-//TODO Play the chord over again after a time if the user doesn't respond
+//TODO Play the chord over again after a time if the player doesn't respond
 object NewMusicStuff2 extends App {
 
   //Change from 60 if you want to test CMajor shapes while doing other keys.  For instance, 62 will
@@ -210,15 +211,15 @@ object NewMusicStuff2 extends App {
         Player.turnOn(comparisonTone + offset, playerChannel)
         currRoot.get.foreach { currentRoot =>
           //I used to have this as isCorrectRoot(comparisonTone + offset, currentRoot)
-          //But removing comparisionTone lets the user use the CMajor keyboard to guess chords in any key, and
+          //But removing comparisionTone lets the player use the CMajor keyboard to guess chords in any key, and
           //we vary the key simply by changing the comparison tone.
           //TODO This is a bit confusing, isn't it?
           val correctRoot = isCorrectRoot(offset, currentRoot)
-          println(s"user's note was ${comparisonTone + offset} and currentRoot is $currentRoot")
+          println(s"player's's note was ${comparisonTone + offset} and currentRoot is $currentRoot")
           println("correct root? " + correctRoot)
           if(correctRoot) {
             playerChoseCorrectRoot.set(true)
-            println("trying to turn off the user's note")
+            println("trying to turn off the player's's note")
             //TODO!!!  We should probably set the offsetForPlayerKeyboard above, as soon as we get the offset arg in this map function, and base everything off of that.
             Player.turnOff(comparisonTone + offsetForPlayerKeyboard, playerChannel)
           }
@@ -251,8 +252,43 @@ object NewMusicStuff2 extends App {
     }
   }
 
+  //Takng out a lot of functionality that waitForCorrectRootOrPlayerToAskForNext handled, but it did that
+  //work for one chord at a time
+  def waitForPlayerResponse(newChords: Vector[DescriptonAndActual], soundingTime: Long): Unit = {
+    {
+      val command = playerCommand.get()
+      playerCommand.set("")
+      command
+    } match {
+      case "D" =>
+        println("===> player going to next chord or series of chords")
+        return
+      case "A" =>
+        println(s"===> player wants to hear chord again. ${newChords.last.desc}")
+        playChords(newChords, soundingTime)
+        waitForPlayerResponse(newChords, soundingTime)
+
+      case other =>
+        Thread.sleep(200)
+        waitForPlayerResponse(newChords, soundingTime)
+    }
+  }
+
+  //===============================================================================================
+  //Important. No longer using this function, but need to pull some functionality from it that's
+  //not yet implemented in the new function.
+  //===============================================================================================
   //TODO We could probably use timer here, and call the chooseAndPlay function when we're done
-  def waitForCorrectRoot(history: Vector[DescriptonAndActual], soundingTime: Long): Unit = {
+  //TODO This was written under the assumption that players will only be reacting to one chord at a time.
+  //I should make this better, but instead, for now I'm writing a more simple function that only responds to
+  //two commands: 1) play those chords again   2) on to the next sequence of chords
+  //and then cedes control to the calling function.
+  //I should come back to this and use it to write a function
+  //that also lets the player type in the chord routes as a test. For right now the only player, me, is using a different
+  //keyboard to find out if his/her/my guesses were correct.
+  //This code also can play the root chord when asked, or regenerate chords that have the root in a low base note,
+  //and I think I should make at least the base root bit work again.
+  def waitForCorrectRootOrPlayerToAskForNext(history: Vector[DescriptonAndActual], soundingTime: Long): Unit = {
     if(playerChoseCorrectRoot.get){
       println(s"player got correct root")
       playerChoseCorrectRoot.set(false)
@@ -275,27 +311,27 @@ object NewMusicStuff2 extends App {
         case "A" =>
           println(s"player wants to hear chord again. ${history.last.desc}")
           Player.soundNotesForTime(history.last.actual, soundingTime)(testerChannel)
-          waitForCorrectRoot(history, soundingTime)
+          waitForCorrectRootOrPlayerToAskForNext(history, soundingTime)
 
         case "R" =>
           println(s"playing root chord")
           Player.soundNotesForTime(history.head.actual, soundingTime)(testerChannel)
           println(s"playing latest chord")
           Player.soundNotesForTime(history.last.actual, soundingTime)(testerChannel)
-          waitForCorrectRoot(history, soundingTime)
+          waitForCorrectRootOrPlayerToAskForNext(history, soundingTime)
         case "b" => {
           println("playing chord that may have had low root note added")
           val sequenceOfNotesThatMightHaveHadLowRootAdded = addLowRootTone(history.last)
           println("playing root of this chord: " + history.last.desc)
           Player.soundNotesForTime(sequenceOfNotesThatMightHaveHadLowRootAdded, soundingTime)(testerChannel)
-          waitForCorrectRoot(history, soundingTime)
+          waitForCorrectRootOrPlayerToAskForNext(history, soundingTime)
         }
         case x if !x.isEmpty && x.forall(_.isDigit) =>
           playback(history, soundingTime, x.toInt)
-          waitForCorrectRoot(history, soundingTime)
+          waitForCorrectRootOrPlayerToAskForNext(history, soundingTime)
         case other =>
           Thread.sleep(200)
-          waitForCorrectRoot(history, soundingTime)
+          waitForCorrectRootOrPlayerToAskForNext(history, soundingTime)
       }
 
     }
@@ -307,19 +343,83 @@ object NewMusicStuff2 extends App {
     makeTriad(desc, startingRoot, makeLowerOnInversion)
   }
 
-  def chooseAndPlay(choices: Seq[Description], soundingTime: Long, history: Vector[DescriptonAndActual] = Vector.empty, delayTime: Long = 2000L): Unit = {
+  def playChords(newChords: Seq[DescriptonAndActual], soundingTime: Long) = {
+    newChords.map { descriptionAndActual =>
+      println(s"playing $descriptionAndActual")
+      Player.soundNotesForTime(descriptionAndActual.actual, soundingTime)(testerChannel)
+    }
+  }
+
+  //TODO. If I'm trying to sing these, we should see what happens if I narrow the range over which we can choose notes.
+  def chooseAndPlay(choices: Seq[Description], soundingTime: Long, numToChoose: Int = 1,
+                    history: Vector[DescriptonAndActual] = Vector.empty): Unit = {
     println(s"entering chooseAndPlay. previous chord was ${history.lastOption}")
+
+    def loop(newChords: Vector[DescriptonAndActual]): Vector[DescriptonAndActual] = {
+      println(s"newChords length is ${newChords.length} and numToChoose = $numToChoose")
+      if(newChords.length == numToChoose)
+        newChords
+      else {
+        val (desc, makeLowerOnInversion) = choose(choices)
+        //If we already have some new chords and the last one has the same description as the one we just chose,
+        //throw the one we just chose away and try again.
+        //Also throw away and try again if we don't have any new chords and the last chord in our history has a description that
+        //matches the description we just chose.
+        if((!newChords.isEmpty && (newChords.lastOption.map(_.desc)) == Some(desc)) || history.lastOption.map(_.desc) == Some(desc) ) {
+          println(s"skipping new chord $desc because it matches our last one")
+          loop(newChords)
+        }
+        else {
+          println(s"thread is ${Thread.currentThread().getName}. New chord description is $desc")
+          val triad = //expandAcrossKeyboard(
+            makeTriadBasedOnComparisonNote(desc, makeLowerOnInversion)
+          //)
+          val descriptonAndActual = DescriptonAndActual(desc, triad)
+          loop(newChords :+ descriptonAndActual)
+        }
+      }
+
+    }
+
+    //This play won't work with multiple chords, mainly because the waitForCorrectRootOrPlayerToAskForNext it calls won't work for that.
+/*    def play(triad: Seq[Int], desc: Description, newHistory: Vector[DescriptonAndActual]): Unit = {
+
+      //Where do we put this? Well, not doing player choose for now!
+      currRoot.set(Some(desc.root))
+      //println(s"NOT SKIPPING!. desc was $desc and last chord played was ${history.headOption}" )
+
+      //This playing has to sound in a loop now!
+      println(s"notes played are $triad and chord is $desc")
+      //This ...
+      //val sequenceOfNotesThatMightHaveHadLowRootAdded = addLowRootTone(descriptonAndActual)
+      //Player.soundNotesForTime(sequenceOfNotesThatMightHaveHadLowRootAdded, soundingTime)(testerChannel)
+      //Or this ...
+      Player.soundNotesForTime(triad, soundingTime)(testerChannel)
+
+      //Really just waiting for player to go on to the next one now!
+      waitForCorrectRootOrPlayerToAskForNext(newHistory, soundingTime)
+      chooseAndPlay(choices, soundingTime, numToChoose, newHistory)
+    }*/
     //TODO Probably don't need doDelay anymore
     if(doDelay.get()){
       doDelay.set(false)
       println("delaying")
       Thread.sleep(3000)
-      chooseAndPlay(choices, soundingTime, history)
+      chooseAndPlay(choices, soundingTime, numToChoose, history)
     }else {
-      val (desc, makeLowerOnInversion) = choose(choices)
+
+      val newChords = loop(Vector.empty)
+      val newHistory = history ++ newChords
+      playChords(newChords, soundingTime)
+      waitForPlayerResponse(newChords, soundingTime)
+      chooseAndPlay(choices, soundingTime, numToChoose, newHistory)
+
+
+      //Old stuff
+/*      val (desc, makeLowerOnInversion) = choose(choices)
       if (history.lastOption.map(_.desc) == Some(desc)) {
         println(s"skipping repeat. desc was $desc and last chord played was ${history.headOption}")
-        chooseAndPlay(choices, soundingTime, history) //For now not allowing Description repeats, although repeats with different
+        chooseAndPlay(choices, soundingTime, numToChoose, history) //For now not allowing Description repeats, although repeats with different
         //note instantiations might be interestingf
       } else {
         println(s"thread is ${Thread.currentThread().getName}. New chord description is $desc and previous was ${history.lastOption}")
@@ -328,19 +428,13 @@ object NewMusicStuff2 extends App {
         //)
         val descriptonAndActual = DescriptonAndActual(desc, triad)
         val newHistory = history :+ descriptonAndActual
-        println(s"notes played are $triad and chord is $desc")
-        currRoot.set(Some(desc.root))
-        //println(s"NOT SKIPPING!. desc was $desc and last chord played was ${history.headOption}" )
 
-        //This ...
-        //val sequenceOfNotesThatMightHaveHadLowRootAdded = addLowRootTone(descriptonAndActual)
-        //Player.soundNotesForTime(sequenceOfNotesThatMightHaveHadLowRootAdded, soundingTime)(testerChannel)
-        //Or this ...
-        Player.soundNotesForTime(triad, soundingTime)(testerChannel)
+        play(triad, desc, newHistory)
 
-        waitForCorrectRoot(newHistory, soundingTime)
-        chooseAndPlay(choices, soundingTime, newHistory)
-      }
+
+      }*/
+
+
     }
   }
 
@@ -399,12 +493,11 @@ object NewMusicStuff2 extends App {
 
   Player.soundNotesForTime(starter.actual, 4000)(testerChannel)
   //Player.soundNotesForTime(triad, 5000)(testerChannel)
+  //Was 6000 with just one chord
   chooseAndPlay(
-    chordsAndVoicingsToPlay, 6000 //This parameter makes a huge difference in my accuracy. Sounding the chord past the sound of my player's response makes for much better accuracy,
-    , history = Vector(starter),
+    chordsAndVoicingsToPlay, 2000 //This parameter makes a huge difference in my accuracy. Sounding the chord past the sound of my player's response makes for much better accuracy,
+    , 3, history = Vector(starter),
   )
-
-
 
 
 
