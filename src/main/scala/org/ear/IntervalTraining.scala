@@ -6,7 +6,13 @@ import org.ear.NewMusicStuff.keyListener
 
 object IntervalTraining extends App {
 
-  val comparisonTone = 60 // 51
+  //Setting 60 means that offsets are relative to middle C.
+  //When comparisonTone is 60 and legalOffsets are offsets that describe
+  //the diatonic tones in the major key, then tones will be generated in C Major.
+  //If you change the comparision tone to 62 and legalOffsets stays the same,
+  //then tones will be generated in D Major.
+  val comparisonTone = 62 // 51
+  //Settings
   //These legal offsets restrict the game tones to diatonic in the major key.
   val legalOffsets = Vector(-3,-1,0, 2, 4,5,7,9,11,12,14,16,17)
 
@@ -15,10 +21,14 @@ object IntervalTraining extends App {
   import java.awt.event.{KeyEvent, KeyListener}
 
   val synth = Player.createSynth
-  val playerChannel = Player.channelAndInstrument(synth, 1, 120)
+  //Settting controls the sound played by the player
+
+  val playerChannel = Player.channelAndInstrument(synth, 1, 120) //120
   //Make this 0 if you only want to play the keyboard, rather than answer the tones that the test creates
   //Last CHANGED
-  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 42) //42, 17 and 28 are interesting too    // Player.makeChannels(0)
+  //Setting Controls the sound played by the tester
+  //See https://en.wikipedia.org/wiki/General_MIDI Program Change Events for the sounds
+  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 105) //42, 17 and 28 are interesting too    // Player.makeChannels(0)
 
   //An offset is a difference from the 0 note
   //The intervals tell us the difference between each note and its preceding noe
@@ -58,19 +68,22 @@ object IntervalTraining extends App {
   }
 
   //val legalIntervals: Vector[Int]= (-5 to 5).toVector.filterNot(_ == 0)
-  val legalIntervals: Vector[Int]=  (-7 to 7).toVector.filterNot(_ == 0) //(-12 to 12).toVector.filterNot(_ == 0) //(-7 to 7).toVector.filterNot(_ == 0)
+  //Setting controls how far away the next note is allowed to be from the previous one
+  val legalIntervals: Vector[Int]=  (-12 to 12).toVector.filterNot(_ == 0) //(-12 to 12).toVector.filterNot(_ == 0) //(-7 to 7).toVector.filterNot(_ == 0)
   //val legalIntervals: Vector[Int]= Vector(2, -2, 3,-3,4,-4)
   //val legalIntervals: Vector[Int]= Vector(1, -1, 2, -2, 5, -5, 6, -6, 7, -7)
   //val legalIntervals: Vector[Int]= (-9 to 9).toVector.filterNot(x => math.abs(x) < 5)
   //Interesting. Play John Coltrane's Favorite Things on You Tube, reduce the YouTube volume to 1/3 of normal,
   //and, for now, my error rates go from 98% or so to 25% or so at numTestIntersToPlay = 1
   //Last changed
-  val numTestIntervalsToPlay = 2 //3  //5
+  //Setting
+  val numTestIntervalsToPlay = 4//3  //5
   //Important at speed quicker thann 800 I need to say the solfeg first before pressing the notes,
   //where at less challenging spaeds I often say the solfegg first, but I don't have to, because I
   //usually hear the solfeggio as the notes play. It's probably good to force that.
   //LAST CHANGED!
-  val timeToSoundTestNote = 500//1000 //500//800 //400 //1000 //600 //1000 2000 //2000 4 at a time is good
+  //Setting
+  val timeToSoundTestNote = 800//1000 //500//800 //400 //1000 //600 //1000 2000 //2000 4 at a time is good
   val timeToWaitAfterCorrestResponse = 300 //500
 
   //TODO Should these be atomic? Pretty sure they should, at least the ones that are accessed both by sound generation and code that responds to player keystrokes

@@ -13,11 +13,10 @@ import javax.swing.text.DefaultStyledDocument.ElementSpec
 //TODO Play the chord over again after a time if the player doesn't respond
 object NewMusicStuff2 extends App {
 
-  //Change from 60 if you want to test CMajor shapes while doing other keys.  For instance, 62 will
-  //make D Key sounds and the player can guess the roots using the CMajor shape keyboard
-  val cComparisonTone = 60    //Don't Frickin' change this value!
+   val cComparisonTone = 60    //Don't Frickin' change this value!
+
   //Change this value to play the probe chords in different keys
-  val comparisonTone = 60
+  val comparisonTone = 60//I typically set this to 60
 
   //We give the option of lowering the root because otherwise inversions only serve to raise the average pitch
   def makeTriad(theRoot: Int, voicing: Voicing, minor: Boolean = false, lowerOnInversion: Boolean = false): Seq[Int] = {
@@ -40,7 +39,9 @@ object NewMusicStuff2 extends App {
 
   val lowestNoteToPlay = 21
   val lowestC = 24
-  val highestNoteToPlay = 108
+  //TODO THIS IS A PROBLEM. The value is not being used!!!
+  //Latest Change   Urgent TODO I think this only affects some assertions, but not the notes thar are chosed while I'm playing!
+  val highestNoteToPlay = 50 //76 //108
   //We assume the 0th note is the lowest note
   def expandAcrossKeyboard(smallSeries: Seq[Int]): Seq[Int] = {
     assert(smallSeries.sortWith(_ < _) == smallSeries, "input series of notes is not" +
@@ -130,6 +131,8 @@ object NewMusicStuff2 extends App {
 
   def chooseVoicing(descs: Seq[Description]): Seq[Description] = {
     chooseIt(descs)(_.voicing)
+    //TEMPORARY CHANGE/HACK  Choosing only second inversion chords
+    //descs.filter(_.voicing == SecondInversion)
   }
 
   def choose(descs: Seq[Description]): (Description, Boolean) = {
@@ -162,7 +165,10 @@ object NewMusicStuff2 extends App {
   assert(makeTriad(60, FirstInversion, minor = true, lowerOnInversion = true) == Seq(51, 55, 60))
   assert(makeTriad(60, SecondInversion, minor = true, lowerOnInversion = true) == Seq(55, 60, 63))
 
-  assert(
+  //Latest change. Commenting out these tests because they are dependent on the range of notes, and I want to cut down the range
+  //of notes is, at least temporiarly. TODO I should change the note-choosing algorithm to explicitly depend on the range, like
+  //have the function accept the low-hi limits. And that logic should be moved to a separate file.
+/*  assert(
     expandAcrossKeyboard(Seq(60, 64, 67)) == Seq(24, 28, 31, 36, 40, 43, 48, 52, 55, 60, 64, 67, 72, 76, 79, 84, 88, 91, 96, 100, 103, 108),
     s"actual result is ${expandAcrossKeyboard(Seq(60, 64, 67))}"
   )
@@ -170,7 +176,7 @@ object NewMusicStuff2 extends App {
     expandAcrossKeyboard(Vector(69, 72, 76)) ==
       Seq(21, 24, 28, 33, 36, 40, 45, 48, 52, 57, 60, 64, 69, 72, 76, 81, 84, 88, 93, 96, 100, 105, 108),
     s"actual result is ${expandAcrossKeyboard(Seq(69, 72, 76))}"
-  )
+  )*/
 
   assert(isCorrectRoot(-3, A))
   assert(isCorrectRoot(9, A))
@@ -185,10 +191,10 @@ object NewMusicStuff2 extends App {
   import java.awt.event.{KeyEvent, KeyListener}
 
   val synth = Player.createSynth
-  val playerChannel = Player.channelAndInstrument(synth, 1, 120)
+  val playerChannel = Player.channelAndInstrument(synth, 1, 120) //was 120
   //See https://en.wikipedia.org/wiki/General_MIDI Program Change Events for the sounds
   // corresponding to the instrurment number
-  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 30)
+  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 88) //Was 57. Was 30. Was 21
   //Player.channelAndInstrument(synth, 0, 69)
     //Player.channelAndInstrument(synth, 0, 30)//Player.channelAndInstrument(synth, 0, 41)    // Player.makeChannels(0)
 
@@ -264,7 +270,7 @@ object NewMusicStuff2 extends App {
         println("===> player going to next chord or series of chords")
         return
       case "A" =>
-        println(s"===> player wants to hear chord again. ${newChords.last.desc}")
+        println(s"===> player wants to hear chord again.\n${newChords.map(_.desc).mkString(",")}")
         playChords(newChords, soundingTime)
         waitForPlayerResponse(newChords, soundingTime)
 
@@ -345,7 +351,7 @@ object NewMusicStuff2 extends App {
 
   def playChords(newChords: Seq[DescriptonAndActual], soundingTime: Long) = {
     newChords.map { descriptionAndActual =>
-      println(s"playing $descriptionAndActual")
+      //println(s"playing $descriptionAndActual")
       Player.soundNotesForTime(descriptionAndActual.actual, soundingTime)(testerChannel)
     }
   }
@@ -353,7 +359,7 @@ object NewMusicStuff2 extends App {
   //TODO. If I'm trying to sing these, we should see what happens if I narrow the range over which we can choose notes.
   def chooseAndPlay(choices: Seq[Description], soundingTime: Long, numToChoose: Int = 1,
                     history: Vector[DescriptonAndActual] = Vector.empty): Unit = {
-    println(s"entering chooseAndPlay. previous chord was ${history.lastOption}")
+    //Aprintln(s"entering chooseAndPlay. previous chord was ${history.lastOption}")
 
     def loop(newChords: Vector[DescriptonAndActual]): Vector[DescriptonAndActual] = {
       println(s"newChords length is ${newChords.length} and numToChoose = $numToChoose")
@@ -370,7 +376,7 @@ object NewMusicStuff2 extends App {
           loop(newChords)
         }
         else {
-          println(s"thread is ${Thread.currentThread().getName}. New chord description is $desc")
+          //println(s"thread is ${Thread.currentThread().getName}. New chord description is $desc")
           val triad = //expandAcrossKeyboard(
             makeTriadBasedOnComparisonNote(desc, makeLowerOnInversion)
           //)
@@ -409,6 +415,8 @@ object NewMusicStuff2 extends App {
     }else {
 
       val newChords = loop(Vector.empty)
+      println("Playing these chords: " +
+      newChords.map(_.desc.toString).mkString(","))
       val newHistory = history ++ newChords
       playChords(newChords, soundingTime)
       waitForPlayerResponse(newChords, soundingTime)
@@ -491,13 +499,21 @@ object NewMusicStuff2 extends App {
     cMajorKeyChords
   )//.filter(_.chordType == Major)
 
+  //1000, 4 is good for making chords that you can impprovise over. After you've improvised somethng off the cuff,
+  //you might want to change a couple of the chords to make things nicer.
   Player.soundNotesForTime(starter.actual, 4000)(testerChannel)
   //Player.soundNotesForTime(triad, 5000)(testerChannel)
   //Was 6000 with just one chord
   chooseAndPlay(
-    chordsAndVoicingsToPlay, 2000 //This parameter makes a huge difference in my accuracy. Sounding the chord past the sound of my player's response makes for much better accuracy,
-    , 3, history = Vector(starter),
+    chordsAndVoicingsToPlay, 1000 //This parameter makes a huge difference in my accuracy. Sounding the chord past the sound of my player's response makes for much better accuracy, 2000 is a good, easy setting.
+    , numToChoose = 1, history = Vector(starter),
   )
+  //Next time try only minor chords, then maybe only second inversions. !!
+  //RIGHT NOW WE're only doing second inversions. Search for temporary!
+
+  //====================================================================
+  //Search for Urgent TODO above!!!
+  //====================================================================
 
 
 

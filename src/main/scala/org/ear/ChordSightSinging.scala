@@ -52,8 +52,9 @@ object ChordSightSinging extends App {
   }
 
   def takeNNotes(n: Int): Vector[String] = {
+    val noteNums = (4 to 11).toVector
     //val noteNums = (-3 to 11).toVector
-    val noteNums = (0 to 7 ).toVector
+    //val noteNums = (0 to 7 ).toVector
     def loop(currNum: Int, noteHistory: Vector[Int]): Vector[String] = {
       if(currNum == n) {
         println(s"final noteHistory is $noteHistory")
@@ -106,11 +107,11 @@ object ChordSightSinging extends App {
 
     loop(0, Vector.empty, Vector.empty)
   }
-  println(
-    take(4).mkString(",    "))
-
 /*  println(
-  takeNNotes(4).mkString(",    "))*/
+    take(4).mkString(",    "))*/
+
+  println(
+  takeNNotes(6 ).mkString(",    "))
 
 }
 
