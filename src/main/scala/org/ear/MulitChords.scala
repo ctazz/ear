@@ -1,8 +1,10 @@
 package org.ear
 
 import java.util.concurrent.atomic.{AtomicBoolean, AtomicReference}
+
+//Based on NewMusicStuff
 /*
-This is the one I've been using in 2022
+This is the one I've been using most recently (2022)
 It's good at playing chords one at a time, not good at playing chords in succession.
  */
 
@@ -10,13 +12,29 @@ It's good at playing chords one at a time, not good at playing chords in success
 //TODO I should probably have enums for notes, because I don't have any way to show root movement, and I'd like to print out
 //the root distinace from one test chord to another
 //TODO Play the chord over again after a time if the user doesn't respond
-object NewMusicStuff extends App {
+object MulitChords extends App {
 
   //Change from 60 if you want to test CMajor shapes while doing other keys.  For instance, 62 will
   //make D Key sounds and the player can guess the roots using the CMajor shape keyboard
-  val cComparisonTone = 60    //Don't Frickin' change this value!
+  val cComparisonTone = 62    //Don't Frickin' change this value!
+  //IMPORTANT SETTING
   //Change this value to play the probe chords in different keys
-  val comparisonTone = 60
+  //But the chords will print out as though you're in C!!!!!
+  //55 is G, 65 is F, 57 is A, 62 is D, 64 is E
+  val comparisonTone = 60//C is 60  //<===Moving down 12 makes all notes lower by an octave without changing the key
+  //Currently I find switching from G to D hard
+
+  //important setting
+  val makeLowestNoteInTriadLower = false
+  //important setting
+  //If you have very limited choices, you might want to allow exact repeats.
+  val preventRepeats = false
+
+  def soundTestNotes(notes: Seq[Int], soundingTime: Long) = {
+    val notesToPlay = if(makeLowestNoteInTriadLower) addLowTone(notes) else notes
+    if(makeLowestNoteInTriadLower) println(s"Lowest note is ${notesToPlay.head}")
+    Player.soundNotesForTime(notesToPlay, soundingTime)(testerChannel)
+  }
 
   //We give the option of lowering the root because otherwise inversions only serve to raise the average pitch
   def makeTriad(theRoot: Int, voicing: Voicing, minor: Boolean = false, lowerOnInversion: Boolean = false): Seq[Int] = {
@@ -87,6 +105,12 @@ object NewMusicStuff extends App {
 
 
   import Music._
+  def addLowTone(notes: Seq[Int]): Seq[Int] = {
+    val muchLower = notes.head - 2 * 12
+    val lowNoteToUse = if(muchLower <= 30) muchLower + 12 else muchLower
+    lowNoteToUse +: notes
+  }
+
   //TODO comparison tone machinations getting pretty ugly
   def addLowRootTone(dAndA: DescriptonAndActual): Seq[Int] = {
 
@@ -140,7 +164,7 @@ object NewMusicStuff extends App {
         case theChoice: Description =>
           theChoice.voicing match {
             case RootPostion => (theChoice, false)
-            case someInversion => (theChoice, scala.util.Random.nextBoolean  )
+            case _ => (theChoice, scala.util.Random.nextBoolean  )
           }
       }
     }
@@ -180,13 +204,19 @@ object NewMusicStuff extends App {
   assert(isCorrectRoot(74, D))
   assert(!isCorrectRoot(62, DSharp))
 
-  import javax.sound.midi.MidiChannel
-  import java.awt.event.KeyListener
   import java.awt.event.{KeyEvent, KeyListener}
+  import javax.sound.midi.MidiChannel
 
   val synth = Player.createSynth
   val playerChannel = Player.channelAndInstrument(synth, 1, 120)
-  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 35)    // Player.makeChannels(0)
+
+  //important setting
+  //This is a good instrument for the testerChannel. It sounds like voices:
+  //Player.channelAndInstrument(synth, 0, 54)
+  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 54)
+  //Player.channelAndInstrument(synth, 0, 35) //pretty, does not sustain long
+  //Player.channelAndInstrument(synth, 0, 30) //relatively loud, has long sustain
+  //instrumentNum was 35  // Player.makeChannels(0)
 
 
   var offsetForPlayerKeyboard = 0;
@@ -236,15 +266,14 @@ object NewMusicStuff extends App {
     }
   }
 
-  val keyEventDemo = new KeyEventDemo(keyListener)
-  keyEventDemo.startIt()
+
 
   def playback(history: Vector[DescriptonAndActual], soundingTime: Long, numOfPreviousProbesToPlay: Int): Unit = {
     println(s"numOfPreviousProbesToPlay is $numOfPreviousProbesToPlay")
     val allProbesToPlay = history.slice(history.size - numOfPreviousProbesToPlay - 1, history.size)
     allProbesToPlay.foreach(x => println(x.desc))
     allProbesToPlay.foreach{probe =>
-      Player.soundNotesForTime(probe.actual, soundingTime)(testerChannel)
+      soundTestNotes(probe.actual, soundingTime)
     }
   }
 
@@ -293,7 +322,7 @@ object NewMusicStuff extends App {
         case x if !x.isEmpty && x.forall(_.isDigit) =>
           playback(history, soundingTime, x.toInt)
           //TODO CHUCK TEMP. usually use 'soundingTime', but 3000 gives me chance to sing the chords
-          waitForCorrectRoot(history, 3000)
+          waitForCorrectRoot(history, soundingTime)
         case other =>
           Thread.sleep(200)
           waitForCorrectRoot(history, soundingTime)
@@ -308,7 +337,50 @@ object NewMusicStuff extends App {
      makeTriad(desc, startingRoot, makeLowerOnInversion)
   }
 
-  def chooseAndPlay(choices: Seq[Description], soundingTime: Long, history: Vector[DescriptonAndActual] = Vector.empty, delayTime: Long = 2000L): Unit = {
+
+  //=============BEGIN NEW STUFF =================
+  val lowestTriadTone = 36
+  val highestTriadTone = 96
+
+
+  def addDescriptionAndActuals( choices: Seq[Description], history: Vector[DescriptonAndActual] , numLeftToCreate: Int,
+                                acc: Vector[DescriptonAndActual] = Vector.empty):
+  Vector[DescriptonAndActual] = {
+    //TODO We add to history internally just so we don't make the same description twice. If ccalling code also keeps history, that's a
+    //bit of a waste
+    if(numLeftToCreate== 0) acc
+    else {
+      val (desc, makeLowerOnInversion) = choose(choices)
+      if (history.lastOption.map(_.desc) == Some(desc) && preventRepeats) {
+        println(s"skipping repeat. desc was $desc and last chord played was ${history.headOption}")
+        addDescriptionAndActuals( choices,  history, numLeftToCreate, acc) //For now not allowing Description repeats, although repeats with different
+        //note instantiations might be interestingf
+      }
+      else {
+        //TODO Could expandAcrossKeyborad
+        val triad = //expandAcrossKeyboard(
+          makeTriadBasedOnComparisonNote(desc, makeLowerOnInversion)
+        //)
+        if(triad.head < lowestTriadTone || triad.last > highestTriadTone)  addDescriptionAndActuals(choices, history, numLeftToCreate, acc)
+        else {
+          val descriptonAndActual = DescriptonAndActual(desc, triad)
+          val newHistory = history :+ descriptonAndActual
+          addDescriptionAndActuals(choices, newHistory, numLeftToCreate - 1, acc :+ descriptonAndActual)
+        }
+      }
+    }
+
+  }
+
+  def playLatestSequence(latestSequence: Vector[DescriptonAndActual], soundingTime: Long): Unit = {
+    latestSequence.foreach{x =>
+      println(s"playing $x")
+      soundTestNotes(x.actual, soundingTime)
+    }
+  }
+  //=============END NEW STUFF =================
+
+  def chooseAndPlay(choices: Seq[Description], soundingTime: Long, history: Vector[DescriptonAndActual] = Vector.empty): Unit = {
     println(s"entering chooseAndPlay. previous chord was ${history.lastOption}")
     //TODO Probably don't need doDelay anymore
     if(doDelay.get()){
@@ -387,6 +459,8 @@ object NewMusicStuff extends App {
     )
   }
 
+
+
 /*  val chordsAndVoicingsToPlay =  rootVoicings(
     //allMajorMinorChords
     cMajorKeyChords ++ Vector(BFlat -> Major, DSharp -> Major, D -> Major)
@@ -400,34 +474,53 @@ object NewMusicStuff extends App {
   //Changed testerChannel from 41 to 35
   //CHUCK CHUCK HERE HERE Changed to ccMajorChords on Oct 13, 2022
   //xxxCHANGED comparisonTone to 62 from 60, so we're using the CMajor shape in the key of D
-  val chordsAndVoicingsToPlay =  addAllVoicings(
-    //cMajorKeyChords.filter(tup => tup._2 == Major || tup._1 == A)
-    cMajorKeyChords
+  val chordAndVoicingChoices: Seq[Description] =  addAllVoicings(
+  cMajorKeyChords
+  //cMajorKeyChords.filter(tup => tup._2 == Major || tup._1 == A)
+   // cMajorKeyChords.filter(tup => tup._2 == Minor )
+   //cMajorKeyChords.filter(_._2 == Major)
   //cMajorKeyChords.filter(tup => tup._2 == Major)
-       // allMajorMinorChords
+        //allMajorMinorChords
   )//.filter(_.chordType == Major)
 
-  Player.soundNotesForTime(starter.actual, 4000)(testerChannel)
-  //Player.soundNotesForTime(triad, 5000)(testerChannel)
-  chooseAndPlay(
-    chordsAndVoicingsToPlay, 1000 //This parameter makes a huge difference in my accuracy. Sounding the chord past the sound of my player's response makes for much better accuracy,
-    , history = Vector(starter),
+
+  //Good for practice singing chord intervals
+  val allHaveAInRoot = Vector(
+  Description(D, Minor, SecondInversion),  //in key
+    Description(D, Major, SecondInversion), //out of key
+  Description(A, Minor, RootPostion),  //in key
+    Description(A, Major, RootPostion), //out of key
+  Description(F, Major, FirstInversion), //in key
+    Description(FSharp, Minor, FirstInversion)
   )
 
 
+  val keyEventDemo = new KeyEventDemo(keyListener)
+  keyEventDemo.startIt()
+  //TODO Maintain history here
+  //val newOnes = addDescriptionAndActuals(chordAndVoicingChoices, Vector.empty, 2)
+  //playLatestSequence(newOnes, soundingTime = 3000)
+4
+  def loop(hist: Vector[DescriptonAndActual], howManyInSequence: Int, soundingTime: Long, choices: Seq[Description]): Unit = {
+    val newOnes = addDescriptionAndActuals(choices, hist, howManyInSequence)
+    val newHistory = hist ++ newOnes
+    playLatestSequence(newOnes, soundingTime = soundingTime)
+    //This is still the old version of waitForCorrectRoot, which now hasn't been given the correct root.
+    //For now all we care about is the ability to go to the next sequence, and to play the correct number of chords back if the
+    //player presses a digit key.
+    //We would like, in the future, to allow the player to guess the correct roots by using the keyboard.
+    //And more importantly, have the be able to ask for latest sequence of chords to be played with
+    //the root played low.
+    waitForCorrectRoot(newHistory, soundingTime)
+    loop(newHistory, howManyInSequence, soundingTime, choices)
+  }
 
-
-
-/*  cMajorChords.
-    map { case (rootNote, chordType) => Description(rootNote, chordType, RootPostion) }.
-    //filter(_.chordType == Major).
-    foreach { chord =>
-      val tone = 60 + noteOffset(chord.root)
-      val triadInRootPosition = makeTriad(chord, tone, false)
-      println(triadInRootPosition)
-      Player.soundNotesForTime(triadInRootPosition, 2000)
-    }*/
-
-
+  //Usually I use chordAndVoicingChoices here
+  loop(Vector.empty, 100, 2000, chordAndVoicingChoices)
+  //testerChannel (definition occurs earlier in this program) and soundingTime make a big different.
+  //With testerChanel 30 I can hear the top note and thus kow the inversion
+  //!!!highestNoteToPlay doesn't seem to affect how high the chord tones go!!
+ //Instead, lowestTriadTone and highestTriadTone, which are used in addDescriptionAndActuals, set the range for chord tones
+  //TODO Pass the range into addDescreptionAndActuals!
 
 }

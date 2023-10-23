@@ -6,15 +6,19 @@ import org.ear.NewMusicStuff.keyListener
 
 object IntervalTraining extends App {
 
-  val comparisonTone = 51
+  val comparisonTone = 60
+
+  //These legal offsets restrict the game tones to diatonic in the major key.
+  val legalOffsets = Vector(-3,-1,0, 2, 4,5,7,9,11,12,14,16,17)
 
   import javax.sound.midi.MidiChannel
   import java.awt.event.KeyListener
   import java.awt.event.{KeyEvent, KeyListener}
 
   val synth = Player.createSynth
-  val playerChannel = Player.channelAndInstrument(synth, 1, 120)
-  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 28) //17 and 28 are interesting too    // Player.makeChannels(0)
+  val playerChannel =    Player.channelAndInstrument(synth, 0, 35) //Player.channelAndInstrument(synth, 1, 120)
+  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 35)
+    //Player.channelAndInstrument(synth, 0, 28) //17 and 28 are interesting too    // Player.makeChannels(0)
 
   //An offset is a difference from the 0 note
   //The intervals tell us the difference between each note and its preceding noe
@@ -23,7 +27,9 @@ object IntervalTraining extends App {
     val diff = Choosing.chooseRandomly(legalIntervals)
     val nextOffset = diff + currentOffset
 
-    if(nextOffset < lowestOffset || nextOffset > highestOffset) {
+    //TODO THIS legalOffsets.containst stuff is a quick shortcut to restrict the set of notes (not intervals, notes) that we choose from
+    //If you don't restrict by legalOffssets then you're including all intervals within lowestOffset and highestOffset
+    if(nextOffset < lowestOffset || nextOffset > highestOffset || !legalOffsets.contains(nextOffset)) {
       chooseNextIntervalAndOffset(legalIntervals, currentOffset, lowestOffset, highestOffset)
     }
     else {
@@ -57,7 +63,7 @@ object IntervalTraining extends App {
   //val legalIntervals: Vector[Int]= Vector(2, -2, 3,-3,4,-4)
   //val legalIntervals: Vector[Int]= Vector(1, -1, 2, -2, 5, -5, 6, -6, 7, -7)
   //val legalIntervals: Vector[Int]= (-9 to 9).toVector.filterNot(x => math.abs(x) < 5)
-  val numTestIntervalsToPlay = 2
+  val numTestIntervalsToPlay = 4
   val timeToSoundTestNote =   600 //1000 //600 //1000 2000 //2000 4 at a time is good
   val timeToWaitAfterCorrestResponse = 300 //500
 
@@ -203,7 +209,7 @@ object IntervalTraining extends App {
 
   //Just doing one interval at a time might not be that useful
   val start = 0
-  Player.soundNotesForTime(Seq(comparisonTone + start), 600)(testerChannel)
+  Player.soundNotesForTime(Seq(comparisonTone + start), 200)(testerChannel)
   chooseAndSound(start, numTestIntervalsToPlay, timeToSoundTestNote)
 
 }
