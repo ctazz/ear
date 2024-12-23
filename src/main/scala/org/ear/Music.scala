@@ -87,6 +87,7 @@ object Music {
   }
 
   def cMajorKeyChords: Vector[(Note, ChordType)] =  Vector( (C, Major), (D, Minor), (E, Minor), (F, Major), (G, Major), (A, Minor)    )
+  def aMinorChords = cMajorKeyChords ++ Vector((D, Major), (E, Major))
 
   val allNotes: Vector[Note] = Vector(C, CSharp, D, DSharp, E, F, FSharp, G, GSharp, A, BFlat, B)
   val allMajorMinorChords: Vector[(Note, ChordType)] = for {

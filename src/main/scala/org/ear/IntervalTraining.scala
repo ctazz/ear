@@ -3,21 +3,31 @@ package org.ear
 import java.util.concurrent.atomic.AtomicReference
 
 import org.ear.NewMusicStuff.keyListener
+//A major sixth descendenig Over There-. O-Ver
 
 object IntervalTraining extends App {
 
+  //sets what key you're in. 60 is C
   val comparisonTone = 60
-
+  //Important. Besides lebal offsets, also see legalIhtervals!
   //These legal offsets restrict the game tones to diatonic in the major key.
-  val legalOffsets = Vector(-3,-1,0, 2, 4,5,7,9,11,12,14,16,17)
+  //val legalOffsets = Vector(-3,-1,0, 2, 4,5,7,9,11,12,14,16,17)
+  //For minor scale
+  //val legalOffsets = Vector(-4, -2, 0, 2, 3,5,7,8,10,12,14,15,17)
+  //For mixolydian
+  //val legalOffsets = Vector(-3,-2,0, 2, 4,5,7,9,10,12,14,16,17)
+  //Major plus flat 7
+  //val legalOffsets = Vector(-3,-2,-1, 0, 2, 4,5,7,9,10, 11, 12,14,16,17)
+  val legalOffsets = (-12 to 12).toVector
 
   import javax.sound.midi.MidiChannel
   import java.awt.event.KeyListener
   import java.awt.event.{KeyEvent, KeyListener}
 
   val synth = Player.createSynth
-  val playerChannel =    Player.channelAndInstrument(synth, 0, 35) //Player.channelAndInstrument(synth, 1, 120)
-  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 35)
+  val playerChannel =   Player.channelAndInstrument(synth, 0, 120) //q Player.channelAndInstrument(synth, 0, 35) //Player.channelAndInstrument(synth, 1, 120)
+  val testerChannel: MidiChannel = Player.channelAndInstrument(synth, 0, 120)
+  //Player.channelAndInstrument(synth, 0, 35)
     //Player.channelAndInstrument(synth, 0, 28) //17 and 28 are interesting too    // Player.makeChannels(0)
 
   //An offset is a difference from the 0 note
@@ -58,13 +68,15 @@ object IntervalTraining extends App {
 
   }
 
-  //val legalIntervals: Vector[Int]= (-5 to 5).toVector.filterNot(_ == 0)
-  val legalIntervals: Vector[Int]= (-7 to 7).toVector.filterNot(_ == 0)
+  //IMPORTANT Setting:
+  //legalIntervals Limits the distance between note n and note n+1
+  val legalIntervals: Vector[Int]= (-4 to 4).toVector.filterNot(_ == 0)
+  //val legalIntervals: Vector[Int]= (-12 to 12).toVector.filterNot(_ == 0)
   //val legalIntervals: Vector[Int]= Vector(2, -2, 3,-3,4,-4)
   //val legalIntervals: Vector[Int]= Vector(1, -1, 2, -2, 5, -5, 6, -6, 7, -7)
   //val legalIntervals: Vector[Int]= (-9 to 9).toVector.filterNot(x => math.abs(x) < 5)
-  val numTestIntervalsToPlay = 4
-  val timeToSoundTestNote =   600 //1000 //600 //1000 2000 //2000 4 at a time is good
+  val numTestIntervalsToPlay =  3//3
+  val timeToSoundTestNote =   1000//500 //1000 //600 //1000 2000 //2000 4 at a time is good
   val timeToWaitAfterCorrestResponse = 300 //500
 
   //TODO Should these be atomic? Pretty sure they should, at least the ones that are accessed both by sound generation and code that responds to player keystrokes
@@ -83,6 +95,7 @@ object IntervalTraining extends App {
     //That is, make this like what we do when replaying the sound in response to the user's "A" (again)
     //And make sure this works well with both interval and actual-note testing
     val intervalsAndOffsets: Vector[(Int, Int)] = takeN(numToTake, currentOffset, legalIntervals)
+    println("internvalsAndOffsets=" + intervalsAndOffsets)
 
     previousOffsetForTestKeyboard = currentOffset
     currentSequence.set(intervalsAndOffsets.map(_._2))
@@ -209,7 +222,7 @@ object IntervalTraining extends App {
 
   //Just doing one interval at a time might not be that useful
   val start = 0
-  Player.soundNotesForTime(Seq(comparisonTone + start), 200)(testerChannel)
+  Player.soundNotesForTime(Seq(comparisonTone + start), 1000)(testerChannel)
   chooseAndSound(start, numTestIntervalsToPlay, timeToSoundTestNote)
 
 }

@@ -14,21 +14,23 @@ It's good at playing chords one at a time, not good at playing chords in success
 //TODO Play the chord over again after a time if the user doesn't respond
 object MulitChords extends App {
 
+
+  val cComparisonTone = 60    //Don't Frickin' change this value!
+
+  //IMPORTANT SETTING
   //Change from 60 if you want to test CMajor shapes while doing other keys.  For instance, 62 will
   //make D Key sounds and the player can guess the roots using the CMajor shape keyboard
-  val cComparisonTone = 62    //Don't Frickin' change this value!
-  //IMPORTANT SETTING
   //Change this value to play the probe chords in different keys
   //But the chords will print out as though you're in C!!!!!
   //55 is G, 65 is F, 57 is A, 62 is D, 64 is E
-  val comparisonTone = 60//C is 60  //<===Moving down 12 makes all notes lower by an octave without changing the key
+  val comparisonTone = 60;//C is 60  //<===Moving down 12 makes all notes lower by an octave without changing the key
   //Currently I find switching from G to D hard
 
   //important setting
   val makeLowestNoteInTriadLower = false
   //important setting
   //If you have very limited choices, you might want to allow exact repeats.
-  val preventRepeats = false
+  val preventRepeats = true
 
   def soundTestNotes(notes: Seq[Int], soundingTime: Long) = {
     val notesToPlay = if(makeLowestNoteInTriadLower) addLowTone(notes) else notes
@@ -208,7 +210,7 @@ object MulitChords extends App {
   import javax.sound.midi.MidiChannel
 
   val synth = Player.createSynth
-  val playerChannel = Player.channelAndInstrument(synth, 1, 120)
+  val playerChannel = Player.channelAndInstrument(synth, 1, 120) //used to be instrument 8
 
   //important setting
   //This is a good instrument for the testerChannel. It sounds like voices:
@@ -475,13 +477,17 @@ object MulitChords extends App {
   //CHUCK CHUCK HERE HERE Changed to ccMajorChords on Oct 13, 2022
   //xxxCHANGED comparisonTone to 62 from 60, so we're using the CMajor shape in the key of D
   val chordAndVoicingChoices: Seq[Description] =  addAllVoicings(
-  cMajorKeyChords
+  //cMajorKeyChords
+  cMajorKeyChords ++ Vector((BFlat, Major))
+    //ncMajorKeyChords ++ Vector((BFlat, Major))    ++ Vector( (D, Major ),  (BFlat, Major), (E, Major), (F, Minor))
+    //aMinorChords
   //cMajorKeyChords.filter(tup => tup._2 == Major || tup._1 == A)
-   // cMajorKeyChords.filter(tup => tup._2 == Minor )
+    //cMajorKeyChords.filter(tup => tup._2 == Minor  )
    //cMajorKeyChords.filter(_._2 == Major)
   //cMajorKeyChords.filter(tup => tup._2 == Major)
         //allMajorMinorChords
-  )//.filter(_.chordType == Major)
+  )//.filter( x => x.voicing == SecondInversion )
+  //.filter(x => (x.voicing == SecondInversion || x.voicing == FirstInversion) && x.chordType == Minor)
 
 
   //Good for practice singing chord intervals
@@ -500,7 +506,7 @@ object MulitChords extends App {
   //TODO Maintain history here
   //val newOnes = addDescriptionAndActuals(chordAndVoicingChoices, Vector.empty, 2)
   //playLatestSequence(newOnes, soundingTime = 3000)
-4
+
   def loop(hist: Vector[DescriptonAndActual], howManyInSequence: Int, soundingTime: Long, choices: Seq[Description]): Unit = {
     val newOnes = addDescriptionAndActuals(choices, hist, howManyInSequence)
     val newHistory = hist ++ newOnes
@@ -516,7 +522,7 @@ object MulitChords extends App {
   }
 
   //Usually I use chordAndVoicingChoices here
-  loop(Vector.empty, 100, 2000, chordAndVoicingChoices)
+  loop(Vector.empty, 1 , 2000, chordAndVoicingChoices)
   //testerChannel (definition occurs earlier in this program) and soundingTime make a big different.
   //With testerChanel 30 I can hear the top note and thus kow the inversion
   //!!!highestNoteToPlay doesn't seem to affect how high the chord tones go!!
