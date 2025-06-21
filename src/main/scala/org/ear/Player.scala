@@ -105,6 +105,19 @@ object Player {
 
   }
 
+  def soundNotesForTimeAsync(notes: Seq[Int], time: Long)(implicit channel: MidiChannel): Unit = {
+    turnOn(notes)
+    val timer = new Timer
+    timer.schedule(
+      new TimerTask {
+        def run: Unit = {
+          println("Turning off")
+          turnOff(notes)
+        }
+      }, time
+    )
+  }
+
   //java sucks
   import collection.JavaConverters._
   def makeChannelsAsJava: java.util.List[MidiChannel] = {

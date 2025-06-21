@@ -234,8 +234,10 @@ object MulitChords extends App {
     }
 
     def keyPressed(e: KeyEvent): Unit = {
-      //println(s"key pressed is $e")
+      println(s"key pressed is $e")
       Keyboard.offset(e.getKeyChar).map { offset =>
+        println("Player.turnOn(comparisonTone + offset, playerChannel)")
+        println("currRoot=" + currRoot.get)
         Player.turnOn(comparisonTone + offset, playerChannel)
         currRoot.get.foreach { currentRoot =>
           //I used to have this as isCorrectRoot(comparisonTone + offset, currentRoot)
@@ -477,9 +479,9 @@ object MulitChords extends App {
   //CHUCK CHUCK HERE HERE Changed to ccMajorChords on Oct 13, 2022
   //xxxCHANGED comparisonTone to 62 from 60, so we're using the CMajor shape in the key of D
   val chordAndVoicingChoices: Seq[Description] =  addAllVoicings(
-  //cMajorKeyChords
-  cMajorKeyChords ++ Vector((BFlat, Major))
-    //ncMajorKeyChords ++ Vector((BFlat, Major))    ++ Vector( (D, Major ),  (BFlat, Major), (E, Major), (F, Minor))
+  cMajorKeyChords
+  //cMajorKeyChords ++ Vector((BFlat, Major))
+    //cMajorKeyChords ++ Vector((BFlat, Major))    ++ Vector( (D, Major ), (E, Major), (F, Minor))
     //aMinorChords
   //cMajorKeyChords.filter(tup => tup._2 == Major || tup._1 == A)
     //cMajorKeyChords.filter(tup => tup._2 == Minor  )
@@ -522,7 +524,7 @@ object MulitChords extends App {
   }
 
   //Usually I use chordAndVoicingChoices here
-  loop(Vector.empty, 1 , 2000, chordAndVoicingChoices)
+  loop(Vector.empty, 4 , 3000, chordAndVoicingChoices)
   //testerChannel (definition occurs earlier in this program) and soundingTime make a big different.
   //With testerChanel 30 I can hear the top note and thus kow the inversion
   //!!!highestNoteToPlay doesn't seem to affect how high the chord tones go!!
